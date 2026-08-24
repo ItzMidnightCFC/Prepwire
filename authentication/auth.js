@@ -1,4 +1,4 @@
-import { supabase } from "./authentication/supabase.js";
+import { supabase } from "./supabase.js";
 import { showToast } from "./components/toast.js";
 
 export async function signUp() {
