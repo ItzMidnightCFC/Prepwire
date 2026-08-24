@@ -12,24 +12,29 @@ const routes = {
 let currentPage = "dashboard";
 let cleanupFn = null;
 
-/* ---------------- ACTIVE SIDEBAR ---------------- */
 function setActiveLink(page) {
   document.querySelectorAll("[data-page]").forEach((link) => {
     link.classList.toggle("active", link.dataset.page === page);
   });
 }
 
-/* ---------------- PAGE LOADER ---------------- */
-async function loadPage(page) {
+async function loadPage(page, updateHistory = true) {
   const loader = document.getElementById("loader");
+  const app = document.getElementById("app");
+
+  if (!app) return;
 
   if (loader) {
     loader.style.display = "flex";
   }
 
-  // cleanup previous page JS
   if (typeof cleanupFn === "function") {
-    cleanupFn();
+    try {
+      cleanupFn();
+    } catch (error) {
+      console.error("Cleanup error:", error);
+    }
+
     cleanupFn = null;
   }
 
@@ -43,22 +48,49 @@ async function loadPage(page) {
       throw new Error("Page not found");
     }
 
-    document.getElementById("app").innerHTML = await res.text();
+    const html = await res.text();
 
-    // Load page JS
+    app.innerHTML = html;
+
+    const content = document.querySelector(".content");
+
+    if (content) {
+      content.scrollTop = 0;
+    }
+
+    window.scrollTo(0, 0);
+
     try {
-      const module = await import(`../pages/${page}.js`);
-
+      const module = await import(`../pages/${page}.js?${Date.now()}`);
       cleanupFn = module.init?.() || null;
     } catch (error) {
       console.error(`Error loading ${page}.js:`, error);
       cleanupFn = null;
     }
+
+    if (updateHistory) {
+      const url =
+        page === "dashboard"
+          ? window.location.pathname.split("/dashboard")[0] || "/"
+          : `${window.location.pathname.split("/dashboard")[0] || ""}/dashboard/${page}`;
+
+      history.pushState({ page }, "", url);
+    }
+
+    requestAnimationFrame(() => {
+      if (content) {
+        content.scrollTop = 0;
+      }
+
+      window.scrollTo(0, 0);
+    });
   } catch (err) {
     console.error(err);
 
-    document.getElementById("app").innerHTML =
-      "<h2>404 Error</h2><h3>Page Not Found<h3>";
+    app.innerHTML = `
+      <h2>404 Error</h2>
+      <h3>Page Not Found</h3>
+    `;
   } finally {
     if (loader) {
       loader.style.display = "none";
@@ -66,29 +98,24 @@ async function loadPage(page) {
   }
 }
 
-/* ---------------- ROUTE LOADER ---------------- */
 export function loadRoute(path) {
   const parts = path.split("/").filter(Boolean);
 
   let page = parts[parts.length - 1];
 
-  // If we're on the dashboard/root route
-  if (!page || page === "index.html") {
+  if (!page || page === "index.html" || page === "dashboard") {
     page = "dashboard";
   }
 
-  // Remove .html if present
   page = page.replace(".html", "");
 
-  // Make sure the route exists
   if (!routes[page]) {
     page = "dashboard";
   }
 
-  loadPage(page);
+  loadPage(page, false);
 }
 
-/* ---------------- NAVIGATION ---------------- */
 document.addEventListener("click", (e) => {
   const link = e.target.closest("[data-page]");
 
@@ -96,10 +123,19 @@ document.addEventListener("click", (e) => {
 
   e.preventDefault();
 
-  loadPage(link.dataset.page);
+  const page = link.dataset.page;
+
+  if (!routes[page]) return;
+
+  if (page === currentPage) return;
+
+  loadPage(page, true);
 });
 
-/* ---------------- INITIAL LOAD ---------------- */
+window.addEventListener("popstate", () => {
+  loadRoute(window.location.pathname);
+});
+
 window.addEventListener("load", () => {
   loadRoute(window.location.pathname);
 });

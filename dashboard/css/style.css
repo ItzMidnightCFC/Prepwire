@@ -7,7 +7,7 @@
     transform: translateY(100%);
     opacity: 0;
   }
-  
+
   to {
     transform: translateY(0%);
     opacity: 1;
@@ -29,13 +29,13 @@ body.dark .dashboard {
 }
 
 body.dark .sidebar {
-  background: #151C24;
+  background: #151c24;
   color: #ffffff;
   border-right-color: #303943;
 }
 
 body.dark .topbar {
-  background: #151C24D1;
+  background: #151c24d1;
   border-bottom-color: #303943;
 }
 
@@ -44,7 +44,7 @@ body.dark .logcolors {
 }
 
 body.dark #menuBtn path {
-  stroke: #ffffffbb
+  stroke: #ffffffbb;
 }
 
 body.dark .sidebar nav a {
@@ -135,7 +135,6 @@ body,
 .logoutbtn,
 .sidebar nav a {
   transition:
-  
     background-color 0.25s ease,
     border-color 0.25s ease,
     color 0.25s ease;
@@ -290,9 +289,13 @@ nav a .svgcolor.active {
 
 .content {
   flex: 1;
+  min-height: 0;
   padding: 0;
   background: #f1f5f9;
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
   animation: moveup 0.3s linear;
 }
 
@@ -313,7 +316,7 @@ nav a .svgcolor.active {
 
 .topbar {
   position: fixed;
-  background: #FFFFFFA6;
+  background: #ffffffa6;
   backdrop-filter: blur(10px);
   width: 100%;
   z-index: 99999;
@@ -341,15 +344,12 @@ nav a .svgcolor.active {
   .sidebar {
     display: none;
   }
-  
+
   #loader {
-    
     width: 100%;
     left: 0px;
   }
-  
-  
-  
+
   #wholecov {
     position: fixed;
     height: 100%;
@@ -357,21 +357,21 @@ nav a .svgcolor.active {
     display: none;
     z-index: 9999;
   }
-  
+
   .topbar {
     display: flex;
   }
-  
+
   .sidebar {
     margin-left: -80%;
     width: auto;
     position: fixed;
     height: 100%;
     z-index: 999999;
-    background: #FFFFFFB0;
+    background: #ffffffb0;
     backdrop-filter: blur(10px);
   }
-  
+
   .headtext h1 {
     font-size: 25px;
   }
