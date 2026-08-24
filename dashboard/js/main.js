@@ -1,5 +1,6 @@
 let sidebar = document.querySelector(".sidebar");
 let links = document.querySelectorAll("nav a");
+let loader = document.getElementById("loader");
 
 menuBtn.addEventListener("click", () => {
   sidebar.style.display = "grid";
@@ -29,3 +30,15 @@ function cancelBar() {
     });
   });
 }
+
+function screenWidth() {
+  const width = sidebar.getBoundingClientRect().width;
+  let avalaiblewidth = window.innerWidth - width;
+  loader.style.width = avalaiblewidth + "px";
+}
+
+window.addEventListener("resize", () => {
+  screenWidth();
+});
+
+screenWidth();
