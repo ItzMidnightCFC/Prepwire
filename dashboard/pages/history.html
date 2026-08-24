@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>History | PrepWire</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: system-ui, sans-serif;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+        margin-top: 10px;
+      }
+
+      .history-page {
+        width: min(1100px, 100%);
+        margin: 0 auto;
+        padding: 0 20px 40px;
+      }
+
+      .history-header {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .history-title h1 {
+        font-size: 30px;
+        margin: 30px 0 7px;
+        color: #000000bb;
+        font-weight: 700;
+        transition: color 0.25s ease;
+      }
+
+      .history-title p {
+        margin-left: 30px;
+        color: #64748b;
+        font-size: 14px;
+        transition: color 0.25s ease;
+      }
+
+      .history-controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .history-search {
+        width: 210px;
+        height: 42px;
+        margin-left: 30px;
+        padding: 0 14px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        outline: none;
+        background: #ffffff;
+        color: #111827;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .history-search::placeholder {
+        color: #94a3b8;
+      }
+
+      .history-search:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px #2563eb12;
+      }
+
+      .history-filter {
+        height: 42px;
+        padding: 0 35px 0 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        outline: none;
+        background: #ffffff;
+        color: #111827;
+        cursor: pointer;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .history-filter:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px #2563eb12;
+      }
+
+      .history-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 20px;
+      }
+
+      .history-card {
+        display: grid;
+        grid-template-columns: minmax(180px, 1fr) auto auto;
+        align-items: center;
+        gap: 24px;
+        padding: 18px 20px;
+        background: #ffffff;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        border-radius: 14px;
+        transition:
+          background-color 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .history-card:hover {
+        border-color: #2563eb;
+        background-color: #f9f9ff;
+        box-shadow: 0 5px 16px #2563eb12;
+        transform: translateY(-1px);
+      }
+
+      .history-card:active {
+        transform: translateY(0);
+      }
+
+      .history-card-left {
+        min-width: 0;
+      }
+
+      .history-subject {
+        font-size: 16px;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 6px;
+        transition: color 0.25s ease;
+      }
+
+      .history-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+      }
+
+      .history-exam {
+        font-weight: 600;
+        color: #2563eb;
+      }
+
+      .history-date {
+        color: #64748b;
+        transition: color 0.25s ease;
+      }
+
+      .history-score {
+        min-width: 70px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .history-score.good {
+        color: #35a83e;
+      }
+
+      .history-score.average {
+        color: #d89400;
+      }
+
+      .history-score.poor {
+        color: #dc2626;
+      }
+
+      .history-info {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: #64748b;
+        font-size: 13px;
+        white-space: nowrap;
+        transition: color 0.25s ease;
+      }
+
+      .history-info span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .history-loading,
+      .history-empty,
+      .history-error {
+        padding: 55px 20px;
+        text-align: center;
+        border: 1px solid #cbd5e1;
+        border-radius: 14px;
+        background: #ffffff;
+        transition:
+          background-color 0.25s ease,
+          border-color 0.25s ease,
+          color 0.25s ease;
+      }
+
+      .history-empty h3,
+      .history-error h3 {
+        font-size: 17px;
+        margin-bottom: 7px;
+        color: #111827;
+        transition: color 0.25s ease;
+      }
+
+      .history-empty p,
+      .history-error p,
+      .history-loading p {
+        color: #64748b;
+        font-size: 14px;
+        transition: color 0.25s ease;
+      }
+
+      .history-spinner {
+        width: 28px;
+        height: 28px;
+        margin: 0 auto 12px;
+        border: 3px solid #e2e8f0;
+        border-top-color: #2563eb;
+        border-radius: 50%;
+        animation: historySpin 0.8s linear infinite;
+      }
+
+      @keyframes historySpin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .history-empty-icon {
+        width: 48px;
+        height: 48px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 22px;
+      }
+
+      .history-count {
+        margin: 20px 0 0 20px;
+        color: #64748b;
+        font-size: 13px;
+        transition: color 0.25s ease;
+      }
+
+      body.dark .history-title h1 {
+        color: #ffffff;
+      }
+
+      body.dark .history-title p {
+        color: #9ca6b2;
+      }
+
+      body.dark .history-search {
+        background: #151c24;
+        color: #ffffff;
+        border-color: #303943;
+      }
+
+      body.dark .history-search::placeholder {
+        color: #7f8a96;
+      }
+
+      body.dark .history-search:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px #2563eb25;
+      }
+
+      body.dark .history-filter {
+        background: #151c24;
+        color: #ffffff;
+        border-color: #303943;
+      }
+
+      body.dark .history-filter:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px #2563eb25;
+      }
+
+      body.dark .history-filter option {
+        background: #151c24;
+        color: #ffffff;
+      }
+
+      body.dark .history-card {
+        background: #151c24;
+        border-color: #303943;
+      }
+
+      body.dark .history-card:hover {
+        background: #1b2a42;
+        border-color: #2563eb;
+        box-shadow: 0 5px 16px #00000040;
+      }
+
+      body.dark .history-subject {
+        color: #ffffff;
+      }
+
+      body.dark .history-date,
+      body.dark .history-info {
+        color: #9ca6b2;
+      }
+
+      body.dark .history-loading,
+      body.dark .history-empty,
+      body.dark .history-error {
+        background: #151c24;
+        border-color: #303943;
+      }
+
+      body.dark .history-empty h3,
+      body.dark .history-error h3 {
+        color: #ffffff;
+      }
+
+      body.dark .history-empty p,
+      body.dark .history-error p,
+      body.dark .history-loading p,
+      body.dark .history-count {
+        color: #9ca6b2;
+      }
+
+      body.dark .history-empty-icon {
+        background: #1c2b42;
+        color: #2563eb;
+      }
+
+      body.dark .history-spinner {
+        border-color: #303943;
+        border-top-color: #2563eb;
+      }
+
+      @media (max-width: 900px) {
+        .history-controls {
+          width: 100%;
+        }
+
+        .history-search {
+          flex: 1;
+          width: auto;
+        }
+
+        .history-filter {
+          width: 150px;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .history-card {
+          grid-template-columns: 1fr auto;
+          gap: 14px;
+        }
+
+        .history-info {
+          grid-column: 1 / -1;
+        }
+      }
+      
+
+      @media (max-width: 600px) {
+        .history-page {
+          width: 100%;
+          padding-top: 40px;
+          
+        }
+        
+
+        .history-title h1 {
+          margin: 20px 6px 7px;
+          font-size: 25px;
+        }
+
+        .history-title p {
+          margin-left: 6px;
+        }
+
+        .history-controls {
+          flex-direction: column;
+          align-items: stretch;
+          margin-top: 5px;
+        }
+
+        .history-search {
+          width: 100%;
+          margin-left: 0;
+          height: 20px;
+          padding: 10px;
+        }
+
+        .history-filter {
+          width: 100%;
+        }
+
+        .history-list {
+          margin: 20px 0;
+        }
+
+        .history-card {
+          padding: 16px;
+        }
+
+        .history-score {
+          min-width: 55px;
+          font-size: 18px;
+        }
+
+        .history-info {
+          gap: 12px;
+          flex-wrap: wrap;
+          white-space: normal;
+        }
+
+        .history-meta {
+          flex-wrap: wrap;
+        }
+
+        .history-count {
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .history-card {
+          grid-template-columns: 1fr;
+        }
+
+        .history-score {
+          text-align: left;
+        }
+
+        .history-info {
+          grid-column: auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="history-page">
+      <header class="history-header">
+        <div class="history-title">
+          <h1>Practice History</h1>
+        </div>
+
+        <div class="history-controls">
+          <input
+            type="search"
+            id="historySearch"
+            class="history-search"
+            placeholder="Search subject..."
+            autocomplete="off"
+          />
+
+          <select id="historyExamFilter" class="history-filter">
+            <option value="all">All Exams</option>
+          </select>
+
+          <select id="historySubjectFilter" class="history-filter">
+            <option value="all">All Subjects</option>
+          </select>
+        </div>
+      </header>
+
+      <section>
+        <div id="historyList" class="history-list">
+          <div class="history-loading">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid"
+              width="28px"
+              height="28px"
+              style="
+                shape-rendering: auto;
+                display: block;
+                background: rgba(255, 255, 255, 0);
+                margin: 0 auto 12px;
+              "
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g>
+                <circle
+                  stroke-dasharray="188.49555921538757 64.83185307179586"
+                  r="40"
+                  stroke-width="9"
+                  stroke="#2563eb"
+                  fill="none"
+                  cy="50"
+                  cx="50"
+                >
+                  <animateTransform
+                    keyTimes="0;1"
+                    values="0 50 50;360 50 50"
+                    dur="1.0526315789473684s"
+                    repeatCount="indefinite"
+                    type="rotate"
+                    attributeName="transform"
+                  ></animateTransform>
+                </circle>
+                <g></g>
+              </g>
+              <!-- [ldio] generated by https://loading.io -->
+            </svg>
+          </div>
+        </div>
+
+        <div id="historyCount" class="history-count"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./history.js"></script>
+  </body>
+</html>

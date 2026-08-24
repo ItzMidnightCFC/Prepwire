@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CBT Practice</title>
+  </head>
+  <body>
+    <h2>Random CBT Question 📝</h2>
+
+    <button onclick="loadFiveQuestions()">Load Question</button>
+
+    <div id="questionBox"></div>
+
+    <script>
+      const API_URL =
+        "https://questions.aloc.com.ng/api/v2/q?subject=chemistry";
+      const API_KEY = "ALOC-042dc5afca780faf2da4"; // keep yours
+
+      async function loadFiveQuestions() {
+        let questions = [];
+
+        // Fetch many questions first
+        for (let i = 0; i < 20; i++) {
+          const res = await fetch(API_URL, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              AccessToken: API_KEY,
+            },
+          });
+
+          const data = await res.json();
+          questions.push(data.data);
+        }
+
+        // 🔥 Filter here
+        const filtered = questions.filter(
+          (q) => q.examyear === "2010" && q.examtype === "utme",
+        );
+
+        // Take only 5
+        const finalQuestions = filtered.slice(0, 5);
+
+        renderQuestions(finalQuestions);
+      }
+
+      function renderQuestions(questions) {
+        if (questions.length === 0) {
+          document.getElementById("questionBox").innerHTML =
+            "No questions found for this year 😢";
+          return;
+        }
+
+        let html = "";
+
+        questions.forEach((q, i) => {
+          html += `
+        <div style="margin-bottom:20px">
+          <p><b>Q${i + 1}. ${q.question}</b></p>
+          <ul>
+            <li>A. ${q.option.a}</li>
+            <li>B. ${q.option.b}</li>
+            <li>C. ${q.option.c}</li>
+            <li>D. ${q.option.d}</li>
+          </ul>
+          <p><small>Answer: ${q.answer.toUpperCase()}</small></p>
+          <p><small>Year: ${q.examyear}</small></p>
+        </div>
+      `;
+        });
+
+        document.getElementById("questionBox").innerHTML = html;
+      }
+    </script>
+  </body>
+</html>

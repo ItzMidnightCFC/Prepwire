@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CBT Practice</title>
+
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+
+      h1 {
+        color: #f1a82a;
+      }
+
+      .question-box {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+      }
+
+      .options div {
+        margin: 8px 0;
+      }
+
+      button {
+        padding: 10px 20px;
+        background: #f1a82a;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .correct {
+        color: green;
+      }
+
+      .wrong {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>📘 CBT Practice</h1>
+
+    <div id="questionBox">Loading questions...</div>
+
+    <button onclick="submitAnswers()">Submit</button>
+
+    <h2 id="result"></h2>
+
+    <script>
+      const API_URL =
+        "https://questions.aloc.com.ng/api/v2/q?subject=mathematics";
+      const API_KEY = "ALOC-042dc5afca780faf2da4";
+
+      let correctAnswers = [];
+
+      async function loadFiveQuestions() {
+        const questions = [];
+
+        for (let i = 0; i < 5; i++) {
+          const res = await fetch(API_URL, {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              AccessToken: API_KEY,
+            },
+          });
+
+          const data = await res.json();
+          questions.push(data.data);
+        }
+
+        renderQuestions(questions);
+      }
+
+      function renderQuestions(questions) {
+        let html = "";
+        correctAnswers = [];
+
+        questions.forEach((q, i) => {
+          correctAnswers.push(q.answer);
+
+          html += `
+          <div class="question-box">
+
+            <h2>Question ${i + 1}</h2>
+            <p>${q.question}</p>
+
+            <div class="options">
+
+              <div>
+                <input type="radio" id="q${i}a" name="q${i}" value="a">
+                <label for="q${i}a">A. ${q.option.a}</label>
+              </div>
+
+              <div>
+                <input type="radio" id="q${i}b" name="q${i}" value="b">
+                <label for="q${i}b">B. ${q.option.b}</label>
+              </div>
+
+              <div>
+                <input type="radio" id="q${i}c" name="q${i}" value="c">
+                <label for="q${i}c">C. ${q.option.c}</label>
+              </div>
+
+              <div>
+                <input type="radio" id="q${i}d" name="q${i}" value="d">
+                <label for="q${i}d">D. ${q.option.d}</label>
+              </div>
+
+            </div>
+
+            <p id="feedback${i}"></p>
+
+          </div>
+        `;
+        });
+
+        document.getElementById("questionBox").innerHTML = html;
+      }
+
+      // Load questions on page load
+      loadFiveQuestions();
+    </script>
+  </body>
+</html>

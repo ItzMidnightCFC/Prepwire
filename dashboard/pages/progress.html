@@ -1,0 +1,548 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Daily Streak</title>
+
+    <style>
+      .progresstext {
+        margin: 30px;
+        text-align: left;
+        color: #000000bb;
+        transition: color 0.25s linear;
+        font-size: 30px;
+      }
+
+      .sd-text {
+        margin: 30px;
+        text-align: left;
+        color: #000000;
+        transition: color 0.25s linear;
+        font-size: 20px;
+      }
+
+      .streak-card {
+        width: calc(100% - 60px);
+        max-width: 520px;
+        padding: 20px;
+        position: relative;
+        box-sizing: border-box;
+        border: 1px solid #e3e4e8;
+        border-radius: 16px;
+        margin: 30px auto;
+        background: #ffffff;
+        transition:
+          background-color 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .streak-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .streak-label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #777777;
+      }
+
+      .streak-header h2 {
+        margin: 0;
+        font-size: 25px;
+        line-height: 1.1;
+        font-weight: 700;
+        color: #171717;
+        transition: color 0.25s ease;
+      }
+
+      .streak-header p {
+        margin: 5px 0 0;
+        font-size: 12px;
+        color: #888888;
+        transition: color 0.25s ease;
+      }
+
+      .streak-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 11px;
+        background: #e9edf6;
+        color: #2563eb;
+        font-size: 18px;
+        flex-shrink: 0;
+        transition:
+          background-color 0.25s ease,
+          color 0.25s ease;
+      }
+
+      .streak-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+        margin-top: 22px;
+      }
+
+      .streak-day {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .streak-day > span {
+        display: none;
+      }
+
+      .day-circle {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 2px solid #dfe0e5;
+        background: #ffffff;
+        font-size: 11px;
+        font-weight: 600;
+        color: #888888;
+        transition:
+          background-color 0.25s ease,
+          border-color 0.25s ease,
+          color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .streak-day.completed .day-circle {
+        border-color: #2563eb;
+        background: #2563eb;
+        color: #ffffff;
+      }
+
+      .streak-day.today .day-circle {
+        border: 2px solid #2563eb;
+        background: #ffffff;
+        color: #2563eb;
+        box-shadow: 0 0 0 3px #e5e9f3;
+      }
+
+      .streak-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid #eeeeee;
+        transition: border-color 0.25s ease;
+      }
+
+      .streak-footer div {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .streak-footer span {
+        font-size: 11px;
+        color: #888888;
+        transition: color 0.25s ease;
+      }
+
+      .streak-footer strong {
+        font-size: 14px;
+        color: #222222;
+        transition: color 0.25s ease;
+      }
+
+      .subject-progress-section {
+        width: 100%;
+        margin-top: 30px;
+        box-sizing: border-box;
+      }
+
+      .subject-progress-header {
+        margin: 0 30px 15px;
+        text-align: left;
+      }
+
+      .subject-progress-header h2 {
+        margin: 0;
+        font-size: 20px;
+        color: #222;
+        transition: color 0.25s ease;
+      }
+
+      .subject-progress-header p {
+        margin: 5px 0 0;
+        font-size: 12px;
+        color: #888;
+        transition: color 0.25s ease;
+      }
+
+      .subject-progress-scroll {
+        display: flex;
+        gap: 15px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 5px 30px 15px;
+        scroll-behavior: smooth;
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e1 transparent;
+      }
+
+      .subject-progress-scroll::-webkit-scrollbar {
+        height: 5px;
+      }
+
+      .subject-progress-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .subject-progress-scroll::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+
+      .subject-progress-card {
+        flex: 0 0 280px;
+        width: 280px;
+        padding: 16px;
+        box-sizing: border-box;
+        background: #ffffff;
+        border: 1px solid #e3e4e8;
+        border-radius: 12px;
+        transition:
+          background-color 0.25s ease,
+          border-color 0.25s ease,
+          box-shadow 0.25s ease;
+      }
+
+      .subject-progress-card:hover {
+        border-color: #2563eb;
+        box-shadow: 0 5px 16px #2563eb12;
+      }
+
+      .subject-progress-card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .subject-progress-card-top span {
+        display: block;
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 4px;
+        transition: color 0.25s ease;
+      }
+
+      .subject-progress-card-top strong {
+        font-size: 20px;
+        color: #171717;
+        transition: color 0.25s ease;
+      }
+
+      .subject-chart {
+        width: 100%;
+        height: 100px;
+        margin-top: 12px;
+      }
+
+      .subject-chart svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        color: #2563eb;
+      }
+
+      .subject-progress-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 4px;
+      }
+
+      .subject-progress-labels span {
+        font-size: 9px;
+        color: #999;
+        transition: color 0.25s ease;
+      }
+
+      .subject-progress-quote {
+        color: #6b6b6b;
+        font-size: 10px;
+        margin-top: 5px;
+        border-top: 1px solid #e5e7eb;
+        padding-top: 5px;
+        transition:
+          color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+      body.dark .progresstext {
+        color: #ffffff;
+      }
+
+      body.dark .sd-text {
+        color: #ffffff;
+      }
+
+      body.dark .streak-card {
+        background: #151c24;
+        border-color: #303943;
+        box-shadow: 0 4px 14px #00000040;
+      }
+
+      body.dark .streak-label {
+        color: #9ca6b2;
+      }
+
+      body.dark .streak-header h2 {
+        color: #ffffff;
+      }
+
+      body.dark .streak-header p {
+        color: #9ca6b2;
+      }
+
+      body.dark .streak-icon {
+        background: #1c2b42;
+        color: #2563eb;
+      }
+
+      body.dark .day-circle {
+        background: #1c2530;
+        border-color: #3a4653;
+        color: #9ca6b2;
+      }
+
+      body.dark .streak-day.completed .day-circle {
+        background: #2563eb;
+        border-color: #2563eb;
+        color: #ffffff;
+      }
+
+      body.dark .streak-day.today .day-circle {
+        background: #151c24;
+        border-color: #2563eb;
+        color: #2563eb;
+        box-shadow: 0 0 0 3px #2563eb25;
+      }
+
+      body.dark .streak-footer {
+        border-top-color: #303943;
+      }
+
+      body.dark .streak-footer span {
+        color: #9ca6b2;
+      }
+
+      body.dark .streak-footer strong {
+        color: #ffffff;
+      }
+
+      body.dark .subject-progress-header h2 {
+        color: #ffffff;
+      }
+
+      body.dark .subject-progress-header p {
+        color: #9ca6b2;
+      }
+
+      body.dark .subject-progress-card {
+        background: #151c24;
+        border-color: #303943;
+      }
+
+      body.dark .subject-progress-card:hover {
+        border-color: #2563eb;
+        box-shadow: 0 5px 16px #00000040;
+      }
+
+      body.dark .subject-progress-card-top span {
+        color: #9ca6b2;
+      }
+
+      body.dark .subject-progress-card-top strong {
+        color: #ffffff;
+      }
+
+      body.dark .subject-progress-labels span {
+        color: #9ca6b2;
+      }
+
+      body.dark .subject-progress-quote {
+        color: #9ca6b2;
+        border-top-color: #303943;
+      }
+
+      body.dark .subject-progress-scroll {
+        scrollbar-color: #3a4653 transparent;
+      }
+
+      body.dark .subject-progress-scroll::-webkit-scrollbar-thumb {
+        background: #3a4653;
+      }
+
+      @media (max-width: 600px) {
+        .progresscontainer{
+          padding-top: 40px;
+        }
+        .progresstext {
+          margin: 25px 20px;
+          font-size: 26px;
+        }
+
+        .sd-text {
+          margin: 25px 20px;
+          font-size: 18px;
+        }
+
+        .streak-card {
+          width: calc(100% - 40px);
+          margin: 25px auto;
+          padding: 16px;
+        }
+
+        .streak-header {
+          gap: 12px;
+        }
+
+        .streak-header h2 {
+          font-size: 23px;
+        }
+
+        .streak-days {
+          gap: 5px;
+        }
+
+        .day-circle {
+          width: 29px;
+          height: 29px;
+          font-size: 10px;
+        }
+
+        .subject-progress-header {
+          margin-left: 20px;
+          margin-right: 20px;
+        }
+
+        .subject-progress-scroll {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        .subject-progress-card {
+          flex-basis: 270px;
+          width: 270px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .streak-card {
+          width: calc(100% - 30px);
+          padding: 14px;
+        }
+
+        .streak-header h2 {
+          font-size: 21px;
+        }
+
+        .streak-days {
+          gap: 3px;
+        }
+
+        .day-circle {
+          width: 27px;
+          height: 27px;
+        }
+
+        .subject-progress-card {
+          flex-basis: 250px;
+          width: 250px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="progresscontainer">
+      <h1 class="progresstext">Progress</h1>
+      <section class="streak-card">
+        <div class="streak-header">
+          <div>
+            <span class="streak-label">Daily Streak</span>
+            <h2>0 days</h2>
+            <p>Keep your streak going!</p>
+          </div>
+
+          <div class="streak-icon">🔥</div>
+        </div>
+
+        <div class="streak-days">
+          <div class="streak-day">
+            <div class="day-circle">M</div>
+          </div>
+
+          <div class="streak-day">
+            <div class="day-circle">T</div>
+          </div>
+
+          <div class="streak-day">
+            <div class="day-circle">W</div>
+          </div>
+
+          <div class="streak-day">
+            <div class="day-circle">T</div>
+          </div>
+
+          <div class="streak-day">
+            <div class="day-circle">F</div>
+          </div>
+
+          <div class="streak-day">
+            <div class="day-circle">S</div>
+          </div>
+
+          <div class="streak-day">
+            <div class="day-circle">S</div>
+          </div>
+        </div>
+
+        <div class="streak-footer">
+          <div>
+            <span>Current streak</span>
+            <strong>0 days</strong>
+          </div>
+
+          <div>
+            <span>Best streak</span>
+            <strong>0 days</strong>
+          </div>
+        </div>
+      </section>
+
+      <div class="sd-container">
+        <div class="subject-progress-section">
+          <div class="subject-progress-header">
+            <h2>Subject Progress</h2>
+            <p>Track your performance over time</p>
+          </div>
+
+          <div class="subject-progress-scroll" id="subjectProgressScroll"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

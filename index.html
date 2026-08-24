@@ -1,0 +1,333 @@
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Prepwire | JAMB CBT Practice & Online Study Platform</title>
+
+  <meta
+    name="description"
+    content="Prepwire helps students prepare for JAMB and WAEC with online CBT practice, subject-based questions, progress tracking, and smarter exam preparation."
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://prepwire.vercel.app/">
+
+  <link rel="icon" href="assets/prepIcons.png" type="image/png">
+
+  <meta property="og:title" content="Prepwire | JAMB & WAEC CBT Practice">
+  <meta
+    property="og:description"
+    content="Practice JAMB and WAEC questions online with Prepwire and track your progress."
+  >
+  <meta property="og:url" content="https://prepwire.vercel.app/">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+  <body>
+    <header>
+      <div style="display: flex" class="headtext">
+        <h1><span style="color: #2563eb">P</span>repWire</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#practice-section">CBT Practice</a></li>
+          <li><a href="#pq-section">Past Questions</a></li>
+          <li><a href="#subject-section">Subjects</a></li>
+          <li><a href="#about-section">About</a></li>
+        </ul>
+      </nav>
+
+      <div class="authoptions">
+        <svg viewBox="0 0 24 24" fill="none" id="menuBtn">
+          <path
+            class="line line1"
+            d="M4 6H20"
+            stroke="#000000bb"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            class="line line2"
+            d="M4 12H20"
+            stroke="#000000bb"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            class="line line3"
+            d="M4 18H20"
+            stroke="#000000bb"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+
+        <button id="register" class="optionsbtns" onclick="Register()">
+          Register
+        </button>
+        <button id="login" class="optionsbtns" onclick="Login()">Login</button>
+      </div>
+    </header>
+
+    <div class="hero-section" id="home">
+      <div id="sectionblur">
+        <h1>
+          Prep Smarter. Score Higher.
+          <div>Practice. Prepare. Perform with confidence.</div>
+        </h1>
+        <p>Timed tests, private practice JAMB and WASSCE questions, instant results</p>
+        <button onclick="Login()">Start CBT Practice</button>
+      </div>
+    </div>
+
+    <div class="practice-section" id="practice-section">
+      <img src="assets/studentss.png" alt="" width="430px" />
+      <div>
+        <h2>
+          A Free CBT Practice and Learning Platform for JAMB/WASSCE Candidates
+        </h2>
+
+        <p>
+          Preparing for
+          <span style="font-weight: 600; color: #484848">JAMB/WASSCE</span>
+          takes more than just reading books. It requires regular practice,
+          focus, and the right kind of preparation.
+          <span style="font-weight: 600; color: #484848">AceCBT</span> gives
+          students a simple and friendly computer-based testing environment
+          where they can practice real exam-style questions,
+          <span style="font-weight: 600; color: #484848">build confidence</span
+          >,
+          <span style="font-weight: 600; color: #484848">improve speed</span>,
+          and understand how the CBT exam works before the main examination.
+        </p>
+        <button onclick="Register()">Register Free Account &rightarrow;</button>
+      </div>
+    </div>
+
+    <div class="pq-section" id="pq-section">
+      <img src="./assets/pastquestionss.png" width="600px" />
+
+      <p>
+        Accesss thousand of JAMB and WASSCE past questions and answers from
+        previous years. <br />
+        Study smarter, identify patterns, and improve your performance
+      </p>
+
+      <ul style="display: flex">
+        <li>10+ Years of Past Questions</li>
+        <li>JAMB</li>
+        <li>WASSCE</li>
+      </ul>
+    </div>
+
+    <div class="subject-section" id="subject-section">
+      <div class="subjexp">
+        <p>
+          Choose from a wide range of JAMB subjects and access carefully
+          organised study materials, practice questions, and learning resources
+          designed to help you excel in your examination
+        </p>
+      </div>
+
+      <div class="subjimg">
+        <div id="boardcov">
+          <img src="./assets/subjectlady.png" alt="" width="460px" />
+          <div class="board">
+            <p>SUBJECTS</p>
+            <p value="english">English Language</p>
+            <p value="mathematics">Mathematics</p>
+            <p value="economics">Economics</p>
+            <p value="biology">Biology</p>
+            <p value="physics">Physics</p>
+            <p value="government">Government</p>
+            <p value="geography">Geography</p>
+            <p value="chemistry">Chemistry</p>
+            <p value="commerce">Commerce</p>
+            <p value="civiledu">Civic Education</p>
+            <p value="accounting">Accounting</p>
+            <p value="crk">CRK</p>
+            <p value="englishlit">English Literature</p>
+          </div>
+        </div>
+        <div class="othersubimg">
+          <img src="./assets/subcycle3.png" alt="" srcset="" width="300px" />
+          <p>Explore subjects and build confidence for your examination</p>
+        </div>
+      </div>
+    </div>
+    
+    
+    <section class="about-section" id="about-section">
+  <div class="about-content">
+    <div class="about-text">
+      <span class="about-label">ABOUT PREPWIRE</span>
+      
+      <h2>Helping Students Prepare With Confidence</h2>
+      
+      <p>
+        PrepWire is a JAMB and WASSCE preparation platform built to make
+        exam practice simple, accessible, and effective for students.
+      </p>
+      
+      <p>
+        We provide CBT practice, past questions, subject-based practice,
+        timed tests, and instant results so students can understand their
+        strengths, improve their speed, and prepare more confidently for
+        their examinations.
+      </p>
+      
+      <p>
+        Whether you're practicing a few questions every day or preparing
+        for the real examination, PrepWire gives you a convenient place
+        to learn and practice.
+      </p>
+      
+      <button onclick="Register()">Start Practicing &rightarrow;</button>
+    </div>
+    
+    <div class="about-stats">
+      <div>
+        <strong>10+</strong>
+        <span>Years of Questions</span>
+      </div>
+      
+      <div>
+        <strong>CBT</strong>
+        <span>Exam Practice</span>
+      </div>
+      
+      <div>
+        <strong>24/7</strong>
+        <span>Practice Access</span>
+      </div>
+      
+      <div>
+        <strong>Free</strong>
+        <span>To Get Started</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="contact-section" id="contact">
+  <div class="contact-heading">
+    <span>CONTACT US</span>
+    <h2>We're Here to Help</h2>
+    <p>
+      Have a question, found a problem, or need help with PrepWire?
+      Send us a message and we'll get back to you.
+    </p>
+  </div>
+
+  <div class="contact-content">
+
+    <div class="contact-info">
+      <div class="contact-card">
+        <div class="contact-icon">✉</div>
+        <div>
+          <h3>Email</h3>
+          <p>bytechcom1@gmail.com</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">?</div>
+        <div>
+          <h3>Support</h3>
+          <p>Need help with your account or CBT practice?</p>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">◷</div>
+        <div>
+          <h3>Response Time</h3>
+          <p>We'll try to respond as soon as possible.</p>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form">
+      <div class="contact-input-row">
+        <input type="text" placeholder="Your name" required />
+        <input type="email" placeholder="Your email" required />
+      </div>
+
+      <input type="text" placeholder="Subject" required />
+
+      <textarea
+        placeholder="Write your message..."
+        rows="6"
+        required
+      ></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+
+  </div>
+</section>
+    
+    <footer class="footer">
+  <div class="footer-content">
+    
+    <div class="footer-brand">
+      <h2><span>P</span>repWire</h2>
+      <p>
+        Practice smarter. Prepare better. Perform with confidence.
+      </p>
+    </div>
+    
+    <div class="footer-links">
+      <h3>Platform</h3>
+      <a href="#practice-section">CBT Practice</a>
+      <a href="#pq-section">Past Questions</a>
+      <a href="#subject-section">Subjects</a>
+    </div>
+    
+    <div class="footer-links">
+      <h3>Company</h3>
+      <a href="#home">Home</a>
+      <a href="#about-section">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    
+    <div class="footer-links">
+      <h3>Legal</h3>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="disclaimer.html">Disclaimer</a>
+    </div>
+    
+  </div>
+  
+  
+  
+  <div class="footer-bottom">
+    <p>© 2026 PrepWire. All rights reserved.</p>
+    
+    <p>
+      PrepWire is an independent examination preparation platform and
+      is not affiliated with or endorsed by JAMB or WASSCE.
+    </p>
+  </div>
+</footer>
+
+    <div class="mobile-navbar">
+      <ul>
+        <li><a href="#home" id="home">Home</a></li>
+        <li><a href="#practice-section">CBT Practice</a></li>
+        <li><a href="#pq-section">Past Questions</a></li>
+        <li><a href="#subject-section">Subjects</a></li>
+        <li><a href="#about-section">About</a></li>
+        <button id="" class="" onclick="Register()">Register</button>
+      </ul>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>

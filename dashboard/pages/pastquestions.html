@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Past Questions</title>
+    <style>
+      .pquesttext {
+        margin: 30px;
+        text-align: left;
+        color: #000000bb;
+        transition: color 0.25s linear;
+        font-size: 30px;
+      }
+
+      .pquestbody {
+        width: 100%;
+        color: #222222;
+        transition: color 0.25s linear;
+        display: flex;
+      }
+
+      .selectcover {
+        width: 300px;
+        border: 1px solid #cccccc;
+        cursor: pointer;
+        background-color: #ffffff;
+        position: relative;
+        font-size: 15px;
+        color: #6b6b6b;
+        display: flex;
+        border-radius: 10px;
+        justify-content: center;
+        transition:
+          background-color 0.25s linear,
+          border-color 0.25s linear,
+          box-shadow 0.25s linear;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
+
+      .selectcover:hover {
+        background-color: #f8fbff;
+        border-color: #2563eb;
+        box-shadow: 0 0 3px #2563eb20;
+      }
+
+      .selectcover:hover select {
+        background-color: #f8fbff;
+      }
+
+      select {
+        width: 85%;
+        transition:
+          background-color 0.25s linear,
+          color 0.25s linear;
+        text-align: left;
+        display: inline-flex;
+        padding: 20px 0;
+        text-overflow: ellipsis;
+        font-size: 15px;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        color: #6b6b6b;
+        background-color: #ffffff;
+      }
+
+      select::-webkit-scrollbar {
+        display: none;
+      }
+
+      label {
+        margin-top: 20px;
+        color: #000000;
+        font-weight: 400;
+        font-size: 16px;
+        box-sizing: border-box;
+        transition: color 0.25s linear;
+      }
+
+      .firstrow,
+      .secondrow {
+        display: grid;
+        width: 90%;
+        padding: 0 5%;
+        justify-items: center;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+        gap: 0 40px;
+      }
+
+      .inputs {
+        outline: none;
+        border: 1px solid #e8e8e8;
+        width: 270px;
+        padding: 5px 15px;
+        height: 50px;
+        border-radius: 10px;
+        font-size: 15px;
+        color: #6b6b6b;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 0 3px #0000000d;
+        transition:
+          background-color 0.25s linear,
+          color 0.25s linear,
+          border-color 0.25s linear,
+          box-shadow 0.25s linear;
+        box-sizing: border-box;
+      }
+
+      .inputs::-webkit-input-placeholder {
+        color: #8d8d8d;
+      }
+
+      .inputs::placeholder {
+        color: #8d8d8d;
+      }
+
+      .inputs:focus {
+        background-color: #f8fbff;
+        border-color: #2563eb;
+        box-shadow: 0 0 3px #2563eb18;
+      }
+
+      .searchbtn {
+        background: #ffffff;
+        border: 1px solid #cccccc;
+        color: #000000;
+        font-size: 17px;
+        display: flex;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: 5%;
+        height: 45px;
+        width: 100px;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        transition: 0.25s linear;
+        cursor: pointer;
+      }
+
+      .searchbtn:hover {
+        background: #f1f5f9;
+        border-color: #2563eb;
+        color: #2563eb;
+      }
+
+      .searchbtn:active {
+        opacity: 0.7;
+        transform: scale(0.97);
+      }
+
+      .questloadbody {
+        background: #ffffff;
+        height: 100%;
+        width: 40%;
+        position: absolute;
+        right: 0;
+        display: none;
+        border-left: 1px solid #cccccc;
+        top: 0;
+        border-radius: 50px 0 0 50px;
+        margin: 0;
+        box-sizing: border-box;
+        transition:
+          background-color 0.25s linear,
+          border-color 0.25s linear,
+          color 0.25s linear;
+      }
+
+      .loadbodycon {
+        margin: 30px;
+      }
+
+      .loadbodycon h2 {
+        font-size: 25px;
+        font-weight: 500;
+      }
+
+      .loaddetails {
+        display: flex;
+        margin-top: 10px;
+      }
+
+      .loaddetails h3 {
+        font-weight: normal;
+        font-size: 18px;
+      }
+
+      .fld {
+        margin-left: auto;
+        display: flex;
+      }
+
+      .fld p,
+      .fld li {
+        margin: 0 20px;
+        font-size: 15px;
+      }
+
+      .rows {
+        display: grid;
+        margin-left: 60px;
+        max-width: 350px;
+      }
+
+      .loadpquestsbox {
+        margin-top: 25px;
+        padding-bottom: 30px;
+      }
+
+      .past-question {
+        padding: 20px 0;
+        border-bottom: 1px solid #e5e5e5;
+        transition: border-color 0.25s linear;
+      }
+
+      .past-question-number {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2563eb;
+        margin-bottom: 12px;
+      }
+
+      .past-question-text {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #222222;
+        margin-bottom: 18px;
+        transition: color 0.25s linear;
+      }
+
+      .past-question-options {
+        display: grid;
+        gap: 10px;
+      }
+
+      .past-question-option {
+        display: flex;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background: #f8f8f8;
+        color: #444444;
+        font-size: 14px;
+        line-height: 1.5;
+        transition:
+          background-color 0.25s linear,
+          color 0.25s linear;
+      }
+
+      .past-question-option strong {
+        color: #2563eb;
+        min-width: 18px;
+      }
+
+      body.dark .pquesttext {
+        color: #ffffff;
+      }
+
+      body.dark .pquestbody {
+        color: #ffffff;
+      }
+
+      body.dark label {
+        color: #ffffff;
+      }
+
+      body.dark .selectcover {
+        background-color: #151c24;
+        border-color: #303943;
+        box-shadow: 0 0 3px #00000080;
+      }
+
+      body.dark .selectcover:hover {
+        background-color: #202b38;
+        border-color: #2563eb;
+      }
+
+      body.dark .selectcover:hover select {
+        background-color: #202b38;
+      }
+
+      body.dark select {
+        background-color: #151c24;
+        color: #ffffff;
+      }
+
+      body.dark select:focus {
+        color: #ffffff;
+      }
+
+      body.dark option {
+        background-color: #151c24;
+        color: #ffffff;
+      }
+
+      body.dark .inputs {
+        background-color: #151c24;
+        color: #ffffff;
+        border-color: #303943;
+        box-shadow: 0 0 3px #00000080;
+      }
+
+      body.dark .inputs::placeholder {
+        color: #7f8a96;
+      }
+
+      body.dark .inputs:focus {
+        background-color: #202b38;
+        color: #ffffff;
+        border-color: #2563eb;
+        box-shadow: 0 0 3px #2563eb30;
+      }
+
+      body.dark .searchbtn {
+        background-color: #2563eb;
+        border-color: #2563eb;
+        color: #ffffff;
+      }
+
+      body.dark .searchbtn:hover {
+        background-color: #1d4ed8;
+        border-color: #1d4ed8;
+        color: #ffffff;
+      }
+
+      body.dark .questloadbody {
+        background-color: #151c24;
+        border-left-color: #303943;
+        color: #ffffff;
+      }
+
+      body.dark .past-question {
+        border-color: #303943;
+      }
+
+      body.dark .past-question-number {
+        color: #60a5fa;
+      }
+
+      body.dark .past-question-text {
+        color: #ffffff;
+      }
+
+      body.dark .past-question-option {
+        background-color: #1c2530;
+        color: #ffffff;
+      }
+
+      body.dark .past-question-option strong {
+        color: #60a5fa;
+      }
+
+      @media (max-width: 600px) {
+        .pquestbody{
+          justify-content: center;
+          
+        }
+        .pquesttext {
+          margin: 25px 20px;
+          font-size: 26px;
+          margin-top: 70px;
+        }
+
+        .firstrow,
+        .secondrow {
+          width: 100%;
+          padding: 0;
+          grid-template-columns: 1fr;
+        }
+
+        label {
+          display: block;
+          margin-left: 0;
+        }
+
+        .searchbtn {
+          margin-right: 5%;
+        }
+
+        .selectcover {
+          
+        }
+
+        .inputs {
+          width: 75%;
+        }
+
+        .questloadbody {
+          width: 90%;
+          display: none;
+          border-radius: 30px 0 0 30px;
+        }
+
+        .loadbodycon {
+          margin: 20px;
+        }
+
+        .rows {
+          margin: 0px auto;
+          max-width: calc(100% - 40px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    
+    <h1 class="pquesttext">Past Questions</h1>
+    <div class="pquestbody">
+      <div class="rows" id="rows">
+        <div>
+          <label for="subject"> Select Subject </label>
+
+          <div class="selectcover">
+            <select name="Subject" id="subject">
+              <option value="English language">English Language</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Economics">Economics</option>
+              <option value="Biology">Biology</option>
+              <option value="Physics">Physics</option>
+              <option value="Government">Government</option>
+              <option value="Geography">Geography</option>
+              <option value="Chemistry">Chemistry</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Accounting">Accounting</option>
+              <option value="Christian Religious Knowledge">
+                Christian Religious Knowledge
+              </option>
+              <option value="English literature">English Literature</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="selectyear"> Select Year </label>
+
+          <div class="selectcover">
+            <select name="Year" id="selectyear">
+              <option value="All">All</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="selecttype"> Exam Type </label>
+
+          <div class="selectcover">
+            <select name="ExamType" id="selecttype">
+              <option value="JAMB">JAMB/UTME</option>
+              <option value="WASSCE">WASSCE</option>
+            </select>
+          </div>
+        </div>
+        <button class="searchbtn" id="searchbtn">Search</button>
+      </div>
+
+      <div class="questloadbody" id="questLoadBody">
+        <div class="loadbodycon">
+          <div class="topload">
+            <div>
+              <h2>Search Result</h2>
+            </div>
+            <div class="loaddetails">
+              <h3>Mathematics</h3>
+              <div class="fld">
+                <p>2013</p>
+                <li>WASSCE</li>
+              </div>
+            </div>
+          </div>
+          <div class="loadpquestsbox"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

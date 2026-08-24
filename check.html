@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CBT Timer (Minutes)</title>
+
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #111;
+        color: white;
+        font-family: Arial;
+      }
+
+      .timer {
+        position: relative;
+        width: 130px;
+        height: 130px;
+      }
+
+      svg {
+        transform: rotate(-90deg);
+      }
+
+      circle {
+        fill: none;
+        stroke: #f1a82a;
+        stroke-width: 8;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 1s linear;
+      }
+
+      .time-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="timer">
+      <svg width="130" height="130">
+        <circle id="circle" r="55" cx="65" cy="65"></circle>
+      </svg>
+
+      <div class="time-text" id="timeText"></div>
+    </div>
+
+    <script>
+      const circle = document.getElementById("circle");
+      const timeText = document.getElementById("timeText");
+
+      const radius = 55;
+      const circumference = 2 * Math.PI * radius;
+
+      circle.style.strokeDasharray = circumference;
+
+      let totalMinutes = 3; // ⏱️ CHANGE THIS
+      let totalTime = totalMinutes * 60; // convert to seconds
+      let timeLeft = totalTime;
+
+      function formatTime(seconds) {
+        let mins = Math.floor(seconds / 60);
+        let secs = seconds % 60;
+
+        return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      }
+
+      function updateTimer() {
+        const offset = circumference - (timeLeft / totalTime) * circumference;
+        circle.style.strokeDashoffset = offset;
+
+        timeText.textContent = formatTime(timeLeft);
+
+        // 🔴 change color when low (last 1 min)
+        if (timeLeft <= 60) {
+          circle.style.stroke = "red";
+        }
+
+        if (timeLeft > 0) {
+          timeLeft--;
+        } else {
+          clearInterval(timer);
+          alert("Time up!");
+        }
+      }
+
+      const timer = setInterval(updateTimer, 1000);
+    </script>
+  </body>
+</html>

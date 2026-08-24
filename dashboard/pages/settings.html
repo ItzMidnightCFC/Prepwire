@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings</title>
+
+    <style>
+      .settingstext {
+        margin: 30px;
+        text-align: left;
+        color: #000000bb;
+        transition: color 0.25s linear;
+        font-size: 30px;
+      }
+
+      .settingsbody {
+        width: 100%;
+        color: #222;
+        transition: color 0.25s linear;
+      }
+
+      .settingssection {
+        width: 90%;
+        margin: 0 auto 30px;
+      }
+
+      .settingssection h2 {
+        margin: 0 0 5px 20px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #222;
+        transition: color 0.25s linear;
+      }
+
+      .settingssection p {
+        margin: 0 0 15px 20px;
+        font-size: 13px;
+        color: #6b6b6b;
+        transition: color 0.25s linear;
+      }
+
+      .settingsbox {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 0 3px #9e9e9e5a;
+        border: 1px solid transparent;
+        overflow: hidden;
+        transition:
+          background-color 0.25s linear,
+          border-color 0.25s linear,
+          box-shadow 0.25s linear;
+      }
+
+      .settingsbox:hover {
+        border-color: #2563eb;
+      }
+
+      .settingrow {
+        min-height: 75px;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        border-bottom: 1px solid #eeeeee;
+        transition: border-color 0.25s linear;
+      }
+
+      .settingrow:last-child {
+        border-bottom: none;
+      }
+
+      .settinginfo {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .settingtitle {
+        margin-bottom: 5px;
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        transition: color 0.25s linear;
+      }
+
+      .settingdescription {
+        color: #6b6b6b;
+        font-size: 13px;
+        line-height: 1.4;
+        transition: color 0.25s linear;
+      }
+
+      .accountvalue {
+        max-width: 280px;
+        color: #6b6b6b;
+        font-size: 14px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: color 0.25s linear;
+      }
+
+      .settingselect {
+        width: 180px;
+        padding: 13px 12px;
+        border: 1px solid transparent;
+        outline: none;
+        border-radius: 8px;
+        background-color: #f8f8f8;
+        color: #535353;
+        font-family: inherit;
+        font-size: 15px;
+        cursor: pointer;
+        transition:
+          background-color 0.25s linear,
+          color 0.25s linear,
+          border-color 0.25s linear;
+      }
+
+      .settingselect:hover {
+        background-color: #f8fbff;
+        border-color: #2563eb;
+      }
+
+      .settingselect:focus {
+        background-color: #f8fbff;
+        border-color: #2563eb;
+      }
+
+      .settingselect option {
+        background-color: #ffffff;
+        color: #333333;
+      }
+
+      .settingswitch {
+        position: relative;
+        display: block;
+        width: 48px;
+        height: 26px;
+        flex-shrink: 0;
+      }
+
+      .settingswitch input {
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+
+      .settingsslider {
+        position: absolute;
+        inset: 0;
+        background-color: #d0d0d0;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.25s linear;
+      }
+
+      .settingsslider::before {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        left: 3px;
+        top: 3px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px #00000030;
+        transition: 0.25s linear;
+      }
+
+      .settingswitch input:checked + .settingsslider {
+        background-color: #2563eb;
+      }
+
+      .settingswitch input:checked + .settingsslider::before {
+        transform: translateX(22px);
+      }
+
+      .settingsaction {
+        background-color: #ffffff;
+        color: #333333;
+        border: 1px solid #cccccc;
+        border-radius: 8px;
+        padding: 12px 17px;
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.25s linear;
+        flex-shrink: 0;
+      }
+
+      .settingsaction:hover {
+        background-color: #f8fbff;
+        color: #2563eb;
+        border-color: #2563eb;
+      }
+
+      .settingssavearea {
+        width: 90%;
+        margin: 0 auto 35px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .settingssavebutton {
+        background-color: #2563eb;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 13px 22px;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.25s linear;
+      }
+
+      .settingssavebutton:hover:not(:disabled) {
+        opacity: 0.85;
+      }
+
+      .settingssavebutton:active:not(:disabled) {
+        opacity: 0.7;
+      }
+
+      .settingssavebutton:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .settings-toast {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        padding: 12px 17px;
+        background-color: #222222;
+        color: #ffffff;
+        border-radius: 8px;
+        font-size: 13px;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: 0.25s linear;
+        z-index: 9999;
+      }
+
+      .settings-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* DARK MODE */
+
+      body.dark .settingstext {
+        color: #ffffff;
+      }
+
+      body.dark .settingsbody {
+        color: #ffffff;
+      }
+
+      body.dark .settingssection h2 {
+        color: #ffffff;
+      }
+
+      body.dark .settingssection p {
+        color: #9ca6b2;
+      }
+
+      body.dark .settingsbox {
+        background-color: #151c24;
+        border-color: #303943;
+        box-shadow: 0 0 3px #00000080;
+      }
+
+      body.dark .settingsbox:hover {
+        border-color: #2563eb;
+      }
+
+      body.dark .settingrow {
+        border-bottom-color: #303943;
+      }
+
+      body.dark .settingtitle {
+        color: #ffffff;
+      }
+
+      body.dark .settingdescription {
+        color: #9ca6b2;
+      }
+
+      body.dark .accountvalue {
+        color: #9ca6b2;
+      }
+
+      body.dark .settingselect {
+        background-color: #1c2530;
+        color: #ffffff;
+        border-color: transparent;
+      }
+
+      body.dark .settingselect:hover,
+      body.dark .settingselect:focus {
+        background-color: #202b38;
+        color: #ffffff;
+        border-color: #2563eb;
+      }
+
+      body.dark .settingselect option {
+        background-color: #151c24;
+        color: #ffffff;
+      }
+
+      body.dark .settingsslider {
+        background-color: #3a4653;
+      }
+
+      body.dark .settingswitch input:checked + .settingsslider {
+        background-color: #2563eb;
+      }
+
+      body.dark .settingsaction {
+        background-color: #1c2530;
+        color: #ffffff;
+        border-color: #3a4653;
+      }
+
+      body.dark .settingsaction:hover {
+        background-color: #202b38;
+        color: #60a5fa;
+        border-color: #2563eb;
+      }
+
+      body.dark .settingssavebutton {
+        background-color: #2563eb;
+        color: #ffffff;
+      }
+
+      body.dark .settings-toast {
+        background-color: #ffffff;
+        color: #111111;
+      }
+
+      @media (max-width: 600px) {
+        .settingsbody{
+          padding-top: 40px;
+        }
+        .settingstext {
+          margin: 25px 20px;
+          font-size: 26px;
+        }
+
+        .settingssection {
+          width: 90%;
+        }
+
+        .settingssection h2 {
+          margin-left: 10px;
+        }
+
+        .settingssection p {
+          margin-left: 10px;
+        }
+
+        .settingrow {
+          padding: 12px 15px;
+          gap: 10px;
+        }
+
+        .settingtitle {
+          font-size: 14px;
+        }
+
+        .settingdescription {
+          font-size: 11px;
+        }
+
+        .accountvalue {
+          max-width: 140px;
+          font-size: 12px;
+        }
+
+        .settingselect {
+          width: 130px;
+          padding: 12px 8px;
+          font-size: 13px;
+        }
+
+        .settingsaction {
+          padding: 10px 11px;
+          font-size: 11px;
+        }
+
+        .settingssavearea {
+          width: 90%;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .settingrow {
+          align-items: center;
+        }
+
+        .accountvalue {
+          max-width: 110px;
+        }
+
+        .settingselect {
+          width: 115px;
+        }
+
+        .settingsaction {
+          padding: 9px 8px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    
+
+    <div class="settingsbody">
+      <h1 class="settingstext">Settings</h1>
+      <section class="settingssection">
+        <h2>Account</h2>
+        <p>Manage your Prepwire account information.</p>
+
+        <div class="settingsbox">
+          <div class="settingrow">
+            <div class="settinginfo">
+              <div class="settingtitle">Email address</div>
+              <div class="settingdescription">
+                Email connected to your Prepwire account.
+              </div>
+            </div>
+
+            <div class="accountvalue" id="userEmail">Loading...</div>
+          </div>
+
+          <div class="settingrow">
+            <div class="settinginfo">
+              <div class="settingtitle">Profile</div>
+              <div class="settingdescription">
+                Change your name, phone number and profile picture.
+              </div>
+            </div>
+
+            <button type="button" class="settingsaction" id="profileButton">
+              Edit Profile
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="settingssection">
+        <h2>Appearance</h2>
+        <p>Customize how Prepwire looks.</p>
+
+        <div class="settingsbox">
+          <div class="settingrow">
+            <div class="settinginfo">
+              <div class="settingtitle">Theme</div>
+              <div class="settingdescription">
+                Choose between light and dark mode.
+              </div>
+            </div>
+
+            <select class="settingselect" id="theme">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="settingssection">
+        <h2>Study Preferences</h2>
+        <p>Customize your CBT practice experience.</p>
+
+        <div class="settingsbox">
+          <div class="settingrow">
+            <div class="settinginfo">
+              <div class="settingtitle">Auto-save history</div>
+              <div class="settingdescription">
+                Automatically save your practice history.
+              </div>
+            </div>
+
+            <label class="settingswitch">
+              <input type="checkbox" id="autoSave" />
+              <span class="settingsslider"></span>
+            </label>
+          </div>
+
+          <div class="settingrow">
+            <div class="settinginfo">
+              <div class="settingtitle">Default question count</div>
+              <div class="settingdescription">
+                Number of questions used when starting practice.
+              </div>
+            </div>
+
+            <select class="settingselect" id="questionCount">
+              <option value="10">10 Questions</option>
+              <option value="15">15 Questions</option>
+              <option value="20">20 Questions</option>
+              <option value="30">30 Questions</option>
+              <option value="40">40 Questions</option>
+            </select>
+          </div>
+
+          <div class="settingrow">
+            <div class="settinginfo">
+              <div class="settingtitle">Default exam time</div>
+              <div class="settingdescription">
+                Default time limit for practice sessions.
+              </div>
+            </div>
+
+            <select class="settingselect" id="examTime">
+              <option value="5">5 Minutes</option>
+              <option value="10">10 Minutes</option>
+              <option value="15">15 Minutes</option>
+              <option value="20">20 Minutes</option>
+              <option value="30">30 Minutes</option>
+              <option value="45">45 Minutes</option>
+              <option value="60">60 Minutes</option>
+            </select>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <
+
+    <div class="settings-toast" id="toast"></div>
+  </body>
+</html>

@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <style>
+      .profiledcov {
+        padding-bottom: 10px;
+      }
+
+      .profiledashboard {
+        z-index: 100;
+        display: flex;
+        color: #222;
+        transition:
+          background-color 0.25s linear,
+          color 0.25s linear;
+      }
+
+      .profilehead {
+        margin: 30px;
+        color: #000000bb;
+        font-size: 30px;
+        transition: color 0.25s linear;
+      }
+
+      #profilebox {
+        display: flex;
+        height: 30px;
+        padding: 10px 14px;
+        align-items: center;
+        background: #ffffff;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        margin: 30px;
+        margin-left: auto;
+        border-radius: 10px;
+        transition:
+          background-color 0.25s linear,
+          border-color 0.25s linear,
+          color 0.25s linear;
+      }
+
+      #profilebox:hover {
+        background-color: #f9f9ff;
+        border-color: #2563eb;
+      }
+
+      #profileimg {
+        font-size: 20px;
+        background-color: #2563eb;
+        overflow: hidden;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        color: #fff;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        cursor: pointer;
+        margin-right: 8px;
+      }
+
+      #profileemail {
+        width: 80%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #222;
+        transition: color 0.25s linear;
+      }
+
+      .profilecov {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .profilebox {
+        padding: 5px;
+        background-color: #f1f5f9;
+        border-radius: 100%;
+        margin-top: -80px;
+        z-index: 110;
+        transition: background-color 0.25s linear;
+      }
+
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        display: none;
+      }
+
+      .profileimg {
+        background: #2563eb;
+        width: 150px;
+        height: 150px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .profileimg p {
+        color: #fff;
+        cursor: pointer;
+        font-size: 30px;
+      }
+
+      .hovercam {
+        background-color: rgba(0, 0, 0, 0.498);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        border-radius: 100%;
+        transition: 0.25s ease-in-out;
+        z-index: 100;
+        cursor: pointer;
+      }
+
+      .hovercam:hover {
+        opacity: 1;
+      }
+
+      .hovercam:active {
+        background-color: #000;
+      }
+
+      .infospage {
+        background: #ffffff;
+        width: 80%;
+        border: 1px solid #e3e8e3;
+        border-radius: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+        margin-top: 20px;
+        padding: 8px 30px;
+        color: #222;
+        transition:
+          background-color 0.25s linear,
+          color 0.25s linear,
+          border-color 0.25s linear,
+          box-shadow 0.25s linear;
+      }
+
+      .personalinfo {
+        width: 100%;
+      }
+
+      .personalinfo h3 {
+        border-bottom: #2563eb 1.5px solid;
+        padding-bottom: 6px;
+        font-weight: 500;
+        margin-top: 15px;
+      }
+
+      .infosecs div,
+      .infosecsf div {
+        display: grid;
+        margin: 5px 10px;
+      }
+
+      .infosecs div label,
+      .infosecsf div label {
+        margin-bottom: 10px;
+        margin-top: 10px;
+        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        transition: color 0.25s linear;
+      }
+
+      .infosecs div label::after,
+      .infosecsf div label::after {
+        color: #2563eb;
+      }
+
+      #phoneNumberL::after {
+        content: " (optional)";
+        color: #2563eb;
+        font-size: 12px;
+      }
+
+      #emailmsg {
+        color: #6b6b6b;
+        font-size: 12px;
+        transition: color 0.25s linear;
+      }
+
+      .personalinfo input:focus {
+        border-color: #2563eb;
+        background-color: #fdfdff;
+      }
+
+      .personalinfo input {
+        height: 35px;
+        padding: 0 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        outline: none;
+        background-color: #ffffff;
+        color: #222;
+        transition:
+          background-color 0.25s linear,
+          color 0.25s linear,
+          border-color 0.125s ease-in;
+      }
+
+      .infosecsf {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+
+      #btnbox {
+        display: flex;
+      }
+
+      .applbtn {
+        margin-left: auto;
+        border: none;
+        background: #cccccc85;
+        color: #fff;
+        font-size: 14px;
+        padding: 8px;
+        border-radius: 5px;
+        transition: 0.25s linear;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        cursor: not-allowed;
+      }
+
+      .applbtn.enabled {
+        background: #2563eb;
+        cursor: pointer;
+      }
+
+      .applbtn.enabled:active {
+        opacity: 0.7;
+      }
+
+      .errormsg {
+        color: red;
+        font-size: 14px;
+        opacity: 0;
+        margin-bottom: -15px;
+      }
+
+      #profileImageInput {
+        width: 150px;
+        height: 150px;
+        background-color: red;
+        position: absolute;
+        border-radius: 100%;
+        cursor: pointer;
+        opacity: 0;
+        z-index: 200;
+      }
+
+      #profilePreview {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.2);
+      }
+
+      #previewcov {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        background-color: #414141;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        overflow: hidden;
+      }
+
+      #profileImage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.2);
+        display: none;
+      }
+
+      body.dark .profiledashboard {
+        color: #ffffff;
+      }
+
+      body.dark .profilehead {
+        color: #ffffff;
+      }
+
+      body.dark #profilebox {
+        background-color: #151c24;
+        border-color: #303943;
+        color: #ffffff;
+      }
+
+      body.dark #profilebox:hover {
+        background-color: #1c2530;
+        border-color: #2563eb;
+      }
+
+      body.dark #profileimg {
+        background-color: #2563eb;
+      }
+
+      body.dark #profileemail {
+        color: #ffffff;
+      }
+
+      body.dark .profilebox {
+        background-color: #0f1720;
+      }
+
+      body.dark .infospage {
+        background-color: #151c24;
+        color: #ffffff;
+        border-color: #303943;
+        box-shadow: 0 4px 14px #00000030;
+      }
+
+      body.dark .personalinfo h3 {
+        color: #ffffff;
+        border-bottom-color: #2563eb;
+      }
+
+      body.dark .infosecs div label,
+      body.dark .infosecsf div label {
+        color: #ffffff;
+      }
+
+      body.dark #emailmsg {
+        color: #9ca6b2;
+      }
+
+      body.dark .personalinfo input {
+        background-color: #1c2530;
+        color: #ffffff;
+        border-color: #303943;
+      }
+
+      body.dark .personalinfo input::placeholder {
+        color: #7f8a96;
+      }
+
+      body.dark .personalinfo input:focus {
+        background-color: #202b3a;
+        border-color: #2563eb;
+      }
+
+      body.dark .applbtn {
+        background-color: #303943;
+        color: #9ca6b2;
+      }
+
+      body.dark .applbtn.enabled {
+        background-color: #2563eb;
+        color: #ffffff;
+      }
+
+      body.dark .errormsg {
+        color: #ff6b6b;
+      }
+
+      @media (max-width: 600px) {
+        .profiledcov{
+          padding-top: 40px;
+          padding-bottom: 30px;
+        }
+        .profiledashboard {
+          padding: 15px;
+          margin-bottom: 40px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          
+        }
+
+        .profiledashboard h1 {
+          font-size: 25px;
+        }
+
+        #profilebox {
+  padding: 5px 9px;
+  
+}
+
+#profileemail {
+  font-size: 13px;
+  
+}
+
+        .infospage {
+          width: 80%;
+          padding: 8px 20px;
+          
+        }
+
+        .infosecsf {
+          grid-template-columns: 1fr;
+        }
+
+        .personalinfo input {
+          width: auto;
+        }
+
+        .profileimg,
+        .hovercam,
+        #profileImageInput,
+        #previewcov {
+          width: 130px;
+          height: 130px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="profiledcov">
+      <div class="profiledashboard">
+        <h1 class="profilehead">Profile</h1>
+        <div id="profilebox">
+          <div id="profileimg">
+            <img src="" alt="" id="profileImage" />
+            <p id="profiletext"></p>
+          </div>
+          <p id="profileemail">loading..</p>
+        </div>
+      </div>
+
+      <div class="infospage">
+        <div class="profilecov">
+          <div class="profilebox">
+            <div class="profileimg">
+              <div class="hovercam">
+                <svg
+                  width="30px"
+                  height="30px"
+                  viewBox="0 -2 32 32"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>camera</title>
+                  <g
+                    id="Page-1"
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <g
+                      id="Icon-Set-Filled"
+                      transform="translate(-258.000000, -467.000000)"
+                      fill="#ffffff"
+                    >
+                      <path
+                        d="M286,471 L283,471 L282,469 C281.411,467.837 281.104,467 280,467 L268,467 C266.896,467 266.53,467.954 266,469 L265,471 L262,471 C259.791,471 258,472.791 258,475 L258,491 C258,493.209 259.791,495 262,495 L286,495 C288.209,495 290,493.209 290,491 L290,475 C290,472.791 288.209,471 286,471 Z M274,491 C269.582,491 266,487.418 266,483 C266,478.582 269.582,475 274,475 C278.418,475 282,478.582 282,483 C282,487.418 278.418,491 274,491 Z M274,477 C270.687,477 268,479.687 268,483 C268,486.313 270.687,489 274,489 C277.313,489 280,486.313 280,483 C280,479.687 277.313,477 274,477 L274,477 Z"
+                        id="camera"
+                      />
+                    </g>
+                  </g>
+                </svg>
+                <input type="file" id="profileImageInput" accept="image/*" />
+              </div>
+
+              <p id="mainProfileText">.</p>
+
+              <div id="previewcov">
+                <img src="" alt="" id="profilePreview" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="personalinfo">
+          <h3>Account Information</h3>
+
+          <div class="infosecsf">
+            <div>
+              <label for="firstName"> First Name </label>
+              <input
+                type="text"
+                value="loading..."
+                class="names"
+                id="firstName"
+              />
+              <p class="errormsg">#</p>
+            </div>
+
+            <div>
+              <label for="lastName"> Last Name </label>
+              <input
+                type="text"
+                name=""
+                value="loading..."
+                class="names"
+                id="lastName"
+              />
+              <p class="errormsg">#</p>
+            </div>
+          </div>
+
+          <div class="infosecs">
+            <div>
+              <label for="userEmail"> Email Address </label>
+              <input type="email" value="loading..." readonly id="userEmail" />
+              <p id="emailmsg">Email address cannot be changed</p>
+            </div>
+
+            <div>
+              <label for="phoneNumber" id="phoneNumberL"> Phone Number </label>
+              <input
+                type="tel"
+                maxlength="11"
+                value=""
+                placeholder="eg. 09129309684"
+                class="p_num"
+                pattern="0-1"
+                id="phoneNumber"
+                inputmode="numeric"
+                oninput="this.value = this.value.replace(/\D/g, '')"
+              />
+              <p class="errormsg">#</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="btnbox">
+          <button class="applbtn" id="applbtn" disabled>Apply Changes</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
