@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prepwirecbt.vercel.app/sitemap.xml
