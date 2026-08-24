@@ -1,16 +1,26 @@
 const routes = {
   dashboard: "./dashboard/pages/dashboard.html",
+
   practice: "./dashboard/pages/practice.html",
+
   pastquestions: "./dashboard/pages/pastquestions.html",
+
   subjects: "./dashboard/pages/subjects.html",
+
   progress: "./dashboard/pages/progress.html",
+
   history: "./dashboard/pages/history.html",
+
   profile: "./dashboard/pages/profile.html",
+
   settings: "./dashboard/pages/settings.html",
 };
 
 let currentPage = "dashboard";
+
 let cleanupFn = null;
+
+/* ---------------- ACTIVE SIDEBAR ---------------- */
 
 function setActiveLink(page) {
   document.querySelectorAll("[data-page]").forEach((link) => {
@@ -18,27 +28,25 @@ function setActiveLink(page) {
   });
 }
 
-async function loadPage(page, updateHistory = true) {
-  const loader = document.getElementById("loader");
-  const app = document.getElementById("app");
+/* ---------------- PAGE LOADER ---------------- */
 
-  if (!app) return;
+async function loadPage(page) {
+  const loader = document.getElementById("loader");
 
   if (loader) {
     loader.style.display = "flex";
   }
 
+  // cleanup previous page JS
+
   if (typeof cleanupFn === "function") {
-    try {
-      cleanupFn();
-    } catch (error) {
-      console.error("Cleanup error:", error);
-    }
+    cleanupFn();
 
     cleanupFn = null;
   }
 
   currentPage = page;
+
   setActiveLink(page);
 
   try {
@@ -48,49 +56,24 @@ async function loadPage(page, updateHistory = true) {
       throw new Error("Page not found");
     }
 
-    const html = await res.text();
+    document.getElementById("app").innerHTML = await res.text();
 
-    app.innerHTML = html;
-
-    const content = document.querySelector(".content");
-
-    if (content) {
-      content.scrollTop = 0;
-    }
-
-    window.scrollTo(0, 0);
+    // Load page JS
 
     try {
-      const module = await import(`../pages/${page}.js?${Date.now()}`);
+      const module = await import(`../pages/${page}.js`);
+
       cleanupFn = module.init?.() || null;
     } catch (error) {
       console.error(`Error loading ${page}.js:`, error);
+
       cleanupFn = null;
     }
-
-    if (updateHistory) {
-      const url =
-        page === "dashboard"
-          ? window.location.pathname.split("/dashboard")[0] || "/"
-          : `${window.location.pathname.split("/dashboard")[0] || ""}/dashboard/${page}`;
-
-      history.pushState({ page }, "", url);
-    }
-
-    requestAnimationFrame(() => {
-      if (content) {
-        content.scrollTop = 0;
-      }
-
-      window.scrollTo(0, 0);
-    });
   } catch (err) {
     console.error(err);
 
-    app.innerHTML = `
-      <h2>404 Error</h2>
-      <h3>Page Not Found</h3>
-    `;
+    document.getElementById("app").innerHTML =
+      "<h2>404 Error</h2><h3>Page Not Found<h3>";
   } finally {
     if (loader) {
       loader.style.display = "none";
@@ -98,23 +81,33 @@ async function loadPage(page, updateHistory = true) {
   }
 }
 
+/* ---------------- ROUTE LOADER ---------------- */
+
 export function loadRoute(path) {
   const parts = path.split("/").filter(Boolean);
 
   let page = parts[parts.length - 1];
 
-  if (!page || page === "index.html" || page === "dashboard") {
+  // If we're on the dashboard/root route
+
+  if (!page || page === "index.html") {
     page = "dashboard";
   }
 
+  // Remove .html if present
+
   page = page.replace(".html", "");
+
+  // Make sure the route exists
 
   if (!routes[page]) {
     page = "dashboard";
   }
 
-  loadPage(page, false);
+  loadPage(page);
 }
+
+/* ---------------- NAVIGATION ---------------- */
 
 document.addEventListener("click", (e) => {
   const link = e.target.closest("[data-page]");
@@ -123,18 +116,10 @@ document.addEventListener("click", (e) => {
 
   e.preventDefault();
 
-  const page = link.dataset.page;
-
-  if (!routes[page]) return;
-
-  if (page === currentPage) return;
-
-  loadPage(page, true);
+  loadPage(link.dataset.page);
 });
 
-window.addEventListener("popstate", () => {
-  loadRoute(window.location.pathname);
-});
+/* ---------------- INITIAL LOAD ---------------- */
 
 window.addEventListener("load", () => {
   loadRoute(window.location.pathname);
