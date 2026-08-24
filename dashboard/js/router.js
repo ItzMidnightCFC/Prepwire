@@ -1,12 +1,12 @@
 const routes = {
-  dashboard: "pages/dashboard.html",
-  practice: "pages/practice.html",
-  pastquestions: "pages/pastquestions.html",
-  subjects: "pages/subjects.html",
-  progress: "pages/progress.html",
-  history: "pages/history.html",
-  profile: "pages/profile.html",
-  settings: "pages/settings.html",
+  dashboard: "./dashboard/pages/dashboard.html",
+  practice: "./dashboard/pages/practice.html",
+  pastquestions: "./dashboard/pages/pastquestions.html",
+  subjects: "./dashboard/pages/subjects.html",
+  progress: "./dashboard/pages/progress.html",
+  history: "./dashboard/pages/history.html",
+  profile: "./dashboard/pages/profile.html",
+  settings: "./dashboard/pages/settings.html",
 };
 
 let currentPage = "dashboard";
