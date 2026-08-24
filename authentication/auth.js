@@ -1,5 +1,5 @@
 import { supabase } from "./supabase.js";
-import { showToast } from "./components/toast.js";
+import { showToast } from "../components/toast.js";
 
 export async function signUp() {
   const fullName = document.getElementById("username").value;
