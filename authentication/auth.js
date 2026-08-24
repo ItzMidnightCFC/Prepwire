@@ -1,5 +1,5 @@
-import { supabase } from "./supabase.js";
-import { showToast } from "../components/toast.js";
+import { supabase } from "./authentication/supabase.js";
+import { showToast } from "./components/toast.js";
 
 export async function signUp() {
   const fullName = document.getElementById("username").value;
@@ -30,7 +30,10 @@ export async function signUp() {
       "error",
     );
   } else {
-    showToast("Signup successful! Please check your email to confirm your account", "success");
+    showToast(
+      "Signup successful! Please check your email to confirm your account",
+      "success",
+    );
     saveCredentials(fullName, email);
     moveToLogin();
   }
@@ -65,7 +68,7 @@ export async function login() {
       localStorage.removeItem("showemail");
       localStorage.removeItem("showpassword");
     }
-    window.location.href = "../dashboard";
+    window.location.href = "./dashboard";
   }
 }
 
