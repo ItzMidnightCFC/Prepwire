@@ -408,7 +408,7 @@ async function submitTest() {
 
   nextbtn.textContent = "Continue";
   nextbtn.addEventListener("click", () => {
-    window.location.href="../../dashboard"
+    window.location.href = "../../dashboard";
   });
 
   await savePracticeSession(score, timeTaken);
