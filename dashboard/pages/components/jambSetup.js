@@ -31,7 +31,7 @@ export function jambbody(body) {
               <option value="civiledu">Civic Education</option>
               <option value="accounting">Accounting</option>
               <option value="crk">
-                Cristian Religious Knowledge
+                Christian Religious Knowledge
               </option>
               <option value="englishlit">English Literature</option>
             </select>
