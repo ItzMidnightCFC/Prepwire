@@ -56,6 +56,9 @@ export async function login() {
       case "Invalid login credentials":
         showToast("Invalid login credentials.", "error");
         break;
+      case "Email not confirmed":
+        showToast("Confirm your email in your inbox first.", "error");
+        break;
       default:
         showToast(`${error.message}`, "error");
         break;
