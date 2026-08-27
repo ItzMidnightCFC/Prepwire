@@ -34,7 +34,37 @@ export async function signUp() {
       "Signup successful! Please check your email to confirm your account",
       "success",
     );
-    saveCredentials(fullName, email);
+  }
+}
+
+
+// Resend confirmation email
+export async function resendConfirmationEmail() {
+  const email = document.getElementById("signupEmail").value.trim();
+
+  if (!email) {
+    showToast("Please enter your email address first.", "error");
+    return;
+  }
+
+  const { error } = await supabase.auth.resend({
+    type: "signup",
+    email: email,
+  });
+
+  if (error) {
+    showToast(
+      "Unable to resend confirmation email. Please try again.",
+      "error",
+    );
+    return;
+  }
+
+  showToast(
+    "Confirmation email sent! Please check your Gmail inbox.",
+    "success",
+  );
+}    saveCredentials(fullName, email);
     moveToLogin();
   }
 }
