@@ -30,41 +30,8 @@ export async function signUp() {
       "error",
     );
   } else {
-    showToast(
-      "Signup successful! Please check your email to confirm your account",
-      "success",
-    );
-  }
-}
-
-
-// Resend confirmation email
-export async function resendConfirmationEmail() {
-  const email = document.getElementById("signupEmail").value.trim();
-
-  if (!email) {
-    showToast("Please enter your email address first.", "error");
-    return;
-  }
-
-  const { error } = await supabase.auth.resend({
-    type: "signup",
-    email: email,
-  });
-
-  if (error) {
-    showToast(
-      "Unable to resend confirmation email. Please try again.",
-      "error",
-    );
-    return;
-  }
-
-  showToast(
-    "Confirmation email sent! Please check your Gmail inbox.",
-    "success",
-  );
-}    saveCredentials(fullName, email);
+    showToast("Signup successful! Please check your email to confirm your account", "success");
+    saveCredentials(fullName, email);
     moveToLogin();
   }
 }
@@ -85,9 +52,6 @@ export async function login() {
         break;
       case "Invalid login credentials":
         showToast("Invalid login credentials.", "error");
-        break;
-      case "Email not confirmed":
-        showToast("Confirm your email in your inbox first.", "error");
         break;
       default:
         showToast(`${error.message}`, "error");
@@ -133,4 +97,4 @@ function saveCredentials(name, email) {
   localStorage.setItem("firstName", firstName);
   localStorage.setItem("lastName", lastName);
   localStorage.setItem("email", email);
-}
+    }
