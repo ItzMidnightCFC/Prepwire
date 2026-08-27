@@ -142,7 +142,7 @@
     <script src="./authentication/index.js"></script>
 
     <script type="module">
-      import { signUp, login } from "./authentication/auth.js";
+      import { signUp, login, resendConfirmationEmail} from "./authentication/auth.js";
 
       const signupEmail = document.getElementById("signupEmail");
       const username = document.getElementById("username");
@@ -158,6 +158,7 @@
 
       window.signUp = signUp;
       window.Login = login;
+      document.getElementById("resendConfirmation").addEventListener("click", resendConfirmationEmail);
 
       function signupValidation() {
         const valid =
