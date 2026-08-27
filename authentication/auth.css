@@ -30,6 +30,13 @@ body {
   box-shadow: 2px 2px 10px rgba(207, 207, 207, 0.24);
 }
 
+#resendConfirmation{
+    color: #95b7ff;
+    margin-top: 10px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
 .headtext {
   margin-bottom: 20px;
   display: flex;
