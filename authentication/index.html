@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link rel="icon" href="../assets/prepIcons.png" type="image/png" />
+    <link rel="icon" href="./assets/prepIcons.png" type="image/png" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="auth.css" />
-    <link rel="stylesheet" href="../components/toast.css" />
+    <link rel="stylesheet" href="./authentication/auth.css" />
+    <link rel="stylesheet" href="./components/toast.css" />
     <title>PrepWire | Login & Register</title>
   </head>
 
@@ -178,14 +178,14 @@
       </section>
     </div>
 
-    <script src="index.js"></script>
+    <script src="./authentication/index.js"></script>
 
     <script type="module">
       import {
         signUp,
         login,
         setupResendConfirmation
-      } from "./auth.js";
+      } from "./authentication/auth.js";
 
       function signupValidation() {
         if (
