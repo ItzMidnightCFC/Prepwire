@@ -1,725 +1,722 @@
 <!doctype html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title></title>
-  <style>
-    .dashboardcontainer {
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      padding-bottom: 30px;
-    }
-    
-    .dashboardtopcontainer {
-      background-color: rgb(255, 255, 255);
-      width: stretch;
-      margin: 30px;
-      margin-bottom: 0px;
-      text-align: left;
-      display: inline-flex;
-      border-radius: 10px;
-      padding: 20px 30px;
-      box-shadow: 0px 0px 3px #9e9e9e5a;
-      cursor: pointer;
-      transition: 0.25s linear;
-    }
-    
-    .dashboardtopcontainer:hover {}
-    
-    .dashboardtopcontainer h1 {
-      font-size: 32px;
-      font-weight: 700;
-      font-family: system-ui, sans-serif;
-      color: #6b6b6b;
-    }
-    
-    .dashboardusername {
-      color: #2563eb;
-    }
-    
-    #tsprogress {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    #phrases {
-      font-size: 16px;
-      color: #6b6b6b;
-      margin-top: 10px;
-      margin-left: 5px;
-    }
-    
-    #profilebox {
-      display: flex;
-      height: 30px;
-      padding: 10px 14px;
-      align-items: center;
-      background: #ffffff;
-      margin-left: auto;
-      overflow: hidden;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      transition: 0.25s linear;
-    }
-    
-    #profilebox:hover {
-      background-color: #f9f9ff;
-      border: 1px #2563eb solid;
-    }
-    
-    #profileimg {
-      font-size: 20px;
-      background-color: #2563eb;
-      overflow: hidden;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      color: #fff;
-      justify-content: center;
-      align-items: center;
-      border-radius: 100%;
-      margin-right: 8px;
-    }
-    
-    #profileemail {
-      width: 80%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    
-    .topsubjectcontainer {
-      background-color: rgb(255, 255, 255);
-      display: flex;
-      width: 90%;
-      margin: 0px 10px 0;
-      margin-bottom: 30px;
-      border-radius: 10px;
-      box-shadow: 0px 0px 3px #9e9e9e5a;
-      padding: 12px 0px;
-      overflow: hidden;
-      border: 1px #ffffff solid;
-      transition: 0.15s linear;
-      height: 130px;
-      cursor: pointer;
-    }
-    
-    .topsubjectcontainer h3 {
-      font-weight: normal;
-    }
-    
-    .topsubjectcontainer h2 {
-      color: #333;
-      font-size: 18px;
-      font-weight: 600;
-    }
-    
-    .topsubjectcontainer:hover {
-      background-color: #f9f9ff;
-      border: 1px #2563eb solid;
-    }
-    
-    .topnumber {
-      background-color: rgb(255, 200, 0);
-      height: 30px;
-      width: 30px;
-      border-radius: 100%;
-      font-size: 16px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 15px;
-      margin-bottom: 10px;
-    }
-    
-    .progress-container {
-      position: relative;
-      width: 50%;
-      height: 120px;
-    }
-    
-    .progress-container svg {
-      transform: rotate(-90deg);
-    }
-    
-    .progress-container circle {
-      fill: none;
-      stroke-width: 10;
-    }
-    
-    .bg {
-      stroke: #eee;
-    }
-    
-    .progress {
-      stroke: #2563eb;
-      stroke-linecap: round;
-      stroke-dasharray: 314;
-      stroke-dashoffset: 314;
-      transition: stroke-dashoffset 3.5s;
-    }
-    
-    .percent {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #6d6d6d;
-      font-size: 20px;
-    }
-    
-    #topprogressbox {
-      display: grid;
-      padding-bottom: 20px;
-      justify-items: center;
-      margin-left: 50%;
-      transform: translateX(-50%);
-      margin-top: 40px;
-      width: 90%;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-    }
-    
-    #top2nd {
-      background-color: #c0c0c0;
-    }
-    
-    #top3rd {
-      background-color: #cd7f32;
-    }
-    
-    #repair {
-      width: 50%;
-    }
-    
-    #completedtext {
-      margin-top: 10px;
-    }
-    
-    #startPracticeBtn {
-      background-color: #2563eb;
-      color: #fff;
-      border: 0px solid #ccc;
-      border-radius: 5px;
-      padding: 8px 15px;
-      transition: 0.25s linear;
-      margin-top: 8px;
-    }
-    
-    #startPracticeBtn:hover {
-      opacity: 0.77;
-    }
-    
-    div a:hover {
-      color: #5c5c5c;
-    }
-    
-    .bottomquicks {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      width: 100%;
-      align-items: center;
-    }
-    
-    .notificationsbox {
-      display: grid;
-      justify-items: left;
-      box-sizing: border-box;
-      margin: 30px;
-      margin-top: 0px;
-      padding: 5px 5px 10px;
-      background-color: white;
-      border: 1px solid #e3e8e3;
-      border-radius: 10px;
-      transition: 0.25s linear;
-    }
-    
-    .nottext {
-      margin-top: 15px;
-      margin-left: 8px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    
-    .notificationsbox h3 {
-      font-weight: 600;
-      font-size: 20px;
-      margin-left: 10px;
-      color: #000000bb;
-    }
-    
-    .notificationcontainer {
-      width: stretch;
-    }
-    
-    .emptybox {
-      margin-left: 50%;
-      
-      margin-top: 30px;
-      transform: translateX(-50%);
-      display: flex;
-      margin-bottom: 30px;
-    }
-    
-    .emptybox p {
-      color: #5c5c5c;
-    }
-    
-    .classnotboxes {
-      width: 90%;
-      margin-left: 50%;
-      border-radius: 10px;
-      transform: translateX(-50%);
-      padding: 10px;
-      justify-content: start;
-      height: 25px;
-      align-items: center;
-      border: 1px #ccc solid;
-      transition: 0.25s linear;
-      display: none;
-      margin-top: 15px;
-      margin-bottom: 15px;
-    }
-    
-    .classnotboxes:hover {}
-    
-    .classnotboxes:first-child {
-      margin-top: 30px;
-    }
-    
-    .classnotboxes p:last-child {
-      margin-left: auto;
-      color: #6b6b6b;
-      font-size: 20px;
-      cursor: pointer;
-      transition: 0.25s linear;
-    }
-    
-    .classnotboxes p:last-child:hover {
-      color: black;
-    }
-    
-    #notificationinfo {
-      font-size: 13px;
-      margin-left: 8px;
-    }
-    
-    .quick-streak {
-      padding: 18px;
-      border: 1px solid #e3e8e3;
-      border-radius: 10px;
-      margin-bottom: 30px;
-      margin-right: 30px;
-      margin-left: 30px;
-      background: #ffffff;
-      cursor: pointer;
-      box-sizing: border-box;
-      max-height: 200px;
-      transition: 0.25s linear;
-    }
-    
-    .quick-streak-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    
-    .quick-streak-top span {
-      display: block;
-      margin-bottom: 3px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #777777;
-    }
-    
-    .quick-streak-top h3 {
-      margin: 0;
-      font-size: 23px;
-      color: #171717;
-    }
-    
-    .quick-streak-icon {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      font-size: 17px;
-    }
-    
-    .quick-streak-days {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 18px;
-    }
-    
-    .quick-day {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1.5px solid #dfe5df;
-      border-radius: 50%;
-      font-size: 10px;
-      font-weight: 600;
-      color: #888888;
-      transition: 0.25s linear;
-    }
-    
-    .quick-day.active {
-      border-color: #2563eb;
-      background: #2563eb;
-      color: #ffffff;
-    }
-    
-    .quick-day.today {
-      border-color: #2563eb;
-      background: #ffffff;
-      color: #2563eb;
-      box-shadow: 0 0 0 3px #e5e9f3;
-    }
-    
-    .quick-streak-message {
-      margin: 14px 0 0;
-      font-size: 11px;
-      color: #888888;
-    }
-    
-    #profileImage {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transform: scale(1.2);
-      display: none;
-    }
-    
-    body.dark .dashboardcontainer {
-      color: #ffffff;
-    }
-    
-    body.dark .dashboardtopcontainer {
-      background-color: #151c24;
-      box-shadow: 0px 0px 3px #00000080;
-    }
-    
-    body.dark .dashboardtopcontainer h1 {
-      color: #ffffff;
-    }
-    
-    body.dark #phrases {
-      color: #9ca6b2;
-    }
-    
-    body.dark .dashboardusername {
-      color: #3b82f6;
-    }
-    
-    body.dark #profilebox {
-      background-color: #1c2530;
-      border-color: #3a4653;
-      color: #ffffff;
-    }
-    
-    body.dark #profilebox:hover {
-      background-color: #202d38;
-      border-color: #3b82f6;
-    }
-    
-    body.dark #profileemail {
-      color: #ffffff;
-    }
-    
-    body.dark .topsubjectcontainer {
-      background-color: #151c24;
-      border-color: #303943;
-      box-shadow: 0px 0px 3px #00000080;
-      color: #ffffff;
-    }
-    
-    body.dark .topsubjectcontainer:hover {
-      background-color: #202d38;
-      border-color: #3b82f6;
-    }
-    
-    body.dark .topsubjectcontainer h2 {
-      color: #ffffff;
-    }
-    
-    body.dark .topsubjectcontainer h3 {
-      color: #9ca6b2 !important;
-    }
-    
-    body.dark .bg {
-      stroke: #303943;
-    }
-    
-    body.dark .progress {
-      stroke: #3b82f6;
-    }
-    
-    body.dark .percent {
-      color: #d5dbe1;
-    }
-    
-    body.dark .notificationsbox {
-      background-color: #151c24;
-      border-color: #303943;
-      color: #ffffff;
-      box-shadow: 0px 0px 3px #00000080;
-    }
-    
-    body.dark .notificationsbox h3 {
-      color: #ffffff;
-    }
-    
-    body.dark .notificationsbox svg path {
-      stroke: #d5dbe1;
-    }
-    
-    body.dark .emptybox p {
-      color: #9ca6b2;
-    }
-    
-    body.dark .classnotboxes {
-      background-color: #1c2530;
-      border-color: #3a4653;
-      box-shadow: 1px 1px 5px #00000040;
-    }
-    
-    body.dark .classnotboxes p:last-child {
-      color: #9ca6b2;
-    }
-    
-    body.dark .classnotboxes p:last-child:hover {
-      color: #ffffff;
-    }
-    
-    body.dark .quick-streak {
-      background-color: #151c24;
-      border-color: #303943;
-      box-shadow: 0px 0px 3px #00000080;
-    }
-    
-    body.dark .quick-streak-top span {
-      color: #9ca6b2;
-    }
-    
-    body.dark .quick-streak-top h3 {
-      color: #ffffff;
-    }
-    
-    body.dark .quick-streak-icon {
-      color: #3b82f6;
-    }
-    
-    body.dark .quick-day {
-      background-color: #1c2530;
-      border-color: #3a4653;
-      color: #9ca6b2;
-    }
-    
-    body.dark .quick-day.active {
-      background-color: #1464c8;
-      border-color: #1464c8;
-      color: #ffffff;
-    }
-    
-    body.dark .quick-day.today {
-      background-color: #151c24;
-      border-color: #3b82f6;
-      color: #3b82f6;
-      box-shadow: 0 0 0 3px #234328;
-    }
-    
-    body.dark .quick-streak-message {
-      color: #9ca6b2;
-    }
-    
-    body.dark #startPracticeBtn {
-      background-color: #1464c8;
-    }
-    
-    body.dark #profileimg {
-      background-color: #1464c8;
-    }
-    
-    @media (max-width: 600px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
       .dashboardcontainer {
-        padding-top: 40px;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        padding-bottom: 30px;
       }
-      
-      .emptybox {
-        width: 60%;
-      }
-      
-      #ovtext {
-        font-size: 15px;
-        margin-left: 0px
-      }
-      
+
       .dashboardtopcontainer {
-        display: grid;
-        justify-items: center;
-        align-content: center;
-        
+        background-color: rgb(255, 255, 255);
+        width: stretch;
+        margin: 30px;
+        margin-bottom: 0px;
+        text-align: left;
+        display: inline-flex;
+        border-radius: 10px;
+        padding: 20px 30px;
+        box-shadow: 0px 0px 3px #9e9e9e5a;
+        cursor: pointer;
+        transition: 0.25s linear;
       }
-      
-      .quick-streak {}
-      
-      #profilebox {
-        padding: 5px 9px;
+
+      .dashboardtopcontainer:hover {
       }
-      
-      #profileemail {
-        font-size: 13px;
-      }
-      
-      #phrases {
-        font-size: 13px;
-      }
-      
+
       .dashboardtopcontainer h1 {
-        font-size: 24px;
+        font-size: 32px;
+        font-weight: 700;
+        font-family: system-ui, sans-serif;
+        color: #6b6b6b;
       }
-      
-      .topsubjectcontainer {
+
+      .dashboardusername {
+        color: #2563eb;
+      }
+
+      #tsprogress {
         display: flex;
-        align-content: center;
-      }
-      
-      .bottomquicks {
         justify-content: center;
+        align-items: center;
       }
-      
+
+      #phrases {
+        font-size: 16px;
+        color: #6b6b6b;
+        margin-top: 10px;
+        margin-left: 5px;
+      }
+
       #profilebox {
-        order: 1;
-        margin: 5px auto;
+        display: flex;
+        height: 30px;
+        padding: 10px 14px;
+        align-items: center;
+        background: #ffffff;
+        margin-left: auto;
+        overflow: hidden;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        transition: 0.25s linear;
+      }
+
+      #profilebox:hover {
+        background-color: #f9f9ff;
+        border: 1px #2563eb solid;
+      }
+
+      #profileimg {
+        font-size: 20px;
+        background-color: #2563eb;
+        overflow: hidden;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        color: #fff;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        margin-right: 8px;
+      }
+
+      #profileemail {
+        width: 80%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .topsubjectcontainer {
+        background-color: rgb(255, 255, 255);
+        display: flex;
+        width: 90%;
+        margin: 0px 10px 0;
         margin-bottom: 30px;
-        
+        border-radius: 10px;
+        box-shadow: 0px 0px 3px #9e9e9e5a;
+        padding: 12px 0px;
+        overflow: hidden;
+        border: 1px #ffffff solid;
+        transition: 0.15s linear;
+        height: 130px;
+        cursor: pointer;
       }
-      
-      
-      
-      #namebox {
-        order: 2;
+
+      .topsubjectcontainer h3 {
+        font-weight: normal;
       }
-    }
-  </style>
-</head>
 
-<body>
-  <div class="dashboardcontainer">
-    <div class="dashboardtopcontainer">
-      <div id="namebox">
-        <h1>
-          Hi,
-          <span id="username" class="dashboardusername">loading...</span>
-        </h1>
-        
-        <p id="phrases">Your journey to exam mastery starts here👋</p>
-      </div>
-      
-      <div id="profilebox" data-page="profile">
-        <div id="profileimg">
-          <img src="" alt="" id="profileImage" />
-          <p id="profiletext"></p>
-        </div>
-        
-        <p id="profileemail">loading..</p>
-      </div>
-    </div>
-    
-    <div id="topprogressbox">
-      <div class="topsubjectcontainer" data-page="progress" id="tsprogress">
-        <div class="progress-container" data-value="50">
-          <svg class="progress-ring" width="120" height="120">
-            <circle class="bg" cx="60" cy="60" r="50" />
-            <circle class="progress" cx="60" cy="60" r="50" />
-          </svg>
-          
-          <div class="percent">0%</div>
-        </div>
-        
-        <div id="repair">
-          <h2 id="ovtext">Overall Progress</h2>
-        </div>
-      </div>
-      
-      <div class="topsubjectcontainer" data-page="history">
-        <div style="width: 100%; display: grid">
-          <h2 id="completedtext">Tests Completed</h2>
-          <h3 style="color: #6d6d6d; margin-top: 3px" id="testsCompleted">
-            0
-          </h3>
-          <div></div>
-        </div>
-      </div>
-      
-      <div class="topsubjectcontainer" data-page="subjects">
-        <div style="width: 100%; display: grid">
-          <h2 id="completedtext">Total Score</h2>
-          <h3 style="color: #6d6d6d; margin-top: 3px" id="totalScore">0</h3>
-          <div></div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="bottomquicks">
-      <div class="notificationsbox">
-        <div class="nottext">
-          <h3>LeaderBoard</h3>
-        </div>
-        
-        <div class="notificationcontainer">
-          <div class="emptybox">
-            <p>LeaderBoard is currently in development ;(</p>
-          </div>
-          
-          <div class="classnotboxes" style="color: #a20000">
-            <p id="notificationinfo">2 days streak lost!</p>
-            <p>&times;</p>
-          </div>
-          
-          <div class="classnotboxes" style="color: #2563eb">
-            <p id="notificationinfo">+30 exp obtained</p>
-            <p>&times;</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="quick-streak" data-page="progress">
-        <div class="quick-streak-top">
-          <div>
-            <span>Daily Streak</span>
-            <h3>0 days</h3>
-          </div>
-          
-          <div class="quick-streak-icon">🔥</div>
-        </div>
-        
-        <div class="quick-streak-days">
-          <div class="quick-day">M</div>
-          <div class="quick-day">T</div>
-          <div class="quick-day">W</div>
-          <div class="quick-day">T</div>
-          <div class="quick-day">F</div>
-          <div class="quick-day">S</div>
-          <div class="quick-day">S</div>
-        </div>
-        
-        <p class="quick-streak-message">Keep your streak going!</p>
-      </div>
-    </div>
-  </div>
-</body>
+      .topsubjectcontainer h2 {
+        color: #333;
+        font-size: 18px;
+        font-weight: 600;
+      }
 
+      .topsubjectcontainer:hover {
+        background-color: #f9f9ff;
+        border: 1px #2563eb solid;
+      }
+
+      .topnumber {
+        background-color: rgb(255, 200, 0);
+        height: 30px;
+        width: 30px;
+        border-radius: 100%;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 10px;
+      }
+
+      .progress-container {
+        position: relative;
+        width: 50%;
+        height: 120px;
+      }
+
+      .progress-container svg {
+        transform: rotate(-90deg);
+      }
+
+      .progress-container circle {
+        fill: none;
+        stroke-width: 10;
+      }
+
+      .bg {
+        stroke: #eee;
+      }
+
+      .progress {
+        stroke: #2563eb;
+        stroke-linecap: round;
+        stroke-dasharray: 314;
+        stroke-dashoffset: 314;
+        transition: stroke-dashoffset 3.5s;
+      }
+
+      .percent {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: #6d6d6d;
+        font-size: 20px;
+      }
+
+      #topprogressbox {
+        display: grid;
+        padding-bottom: 20px;
+        justify-items: center;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        margin-top: 40px;
+        width: 90%;
+        grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      }
+
+      #top2nd {
+        background-color: #c0c0c0;
+      }
+
+      #top3rd {
+        background-color: #cd7f32;
+      }
+
+      #repair {
+        width: 50%;
+      }
+
+      #completedtext {
+        margin-top: 10px;
+      }
+
+      #startPracticeBtn {
+        background-color: #2563eb;
+        color: #fff;
+        border: 0px solid #ccc;
+        border-radius: 5px;
+        padding: 8px 15px;
+        transition: 0.25s linear;
+        margin-top: 8px;
+      }
+
+      #startPracticeBtn:hover {
+        opacity: 0.77;
+      }
+
+      div a:hover {
+        color: #5c5c5c;
+      }
+
+      .bottomquicks {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        width: 100%;
+        align-items: center;
+      }
+
+      .notificationsbox {
+        display: grid;
+        justify-items: left;
+        box-sizing: border-box;
+        margin: 30px;
+        margin-top: 0px;
+        padding: 5px 5px 10px;
+        background-color: white;
+        border: 1px solid #e3e8e3;
+        border-radius: 10px;
+        transition: 0.25s linear;
+      }
+
+      .nottext {
+        margin-top: 15px;
+        margin-left: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .notificationsbox h3 {
+        font-weight: 600;
+        font-size: 20px;
+        margin-left: 10px;
+        color: #000000bb;
+      }
+
+      .notificationcontainer {
+        width: stretch;
+      }
+
+      .emptybox {
+        margin-left: 50%;
+
+        margin-top: 30px;
+        transform: translateX(-50%);
+        display: flex;
+        margin-bottom: 30px;
+      }
+
+      .emptybox p {
+        color: #5c5c5c;
+      }
+
+      .classnotboxes {
+        width: 90%;
+        margin-left: 50%;
+        border-radius: 10px;
+        transform: translateX(-50%);
+        padding: 10px;
+        justify-content: start;
+        height: 25px;
+        align-items: center;
+        border: 1px #ccc solid;
+        transition: 0.25s linear;
+        display: none;
+        margin-top: 15px;
+        margin-bottom: 15px;
+      }
+
+      .classnotboxes:hover {
+      }
+
+      .classnotboxes:first-child {
+        margin-top: 30px;
+      }
+
+      .classnotboxes p:last-child {
+        margin-left: auto;
+        color: #6b6b6b;
+        font-size: 20px;
+        cursor: pointer;
+        transition: 0.25s linear;
+      }
+
+      .classnotboxes p:last-child:hover {
+        color: black;
+      }
+
+      #notificationinfo {
+        font-size: 13px;
+        margin-left: 8px;
+      }
+
+      .quick-streak {
+        padding: 18px;
+        border: 1px solid #e3e8e3;
+        border-radius: 10px;
+        margin-bottom: 30px;
+        margin-right: 30px;
+        margin-left: 30px;
+        background: #ffffff;
+        cursor: pointer;
+        box-sizing: border-box;
+        max-height: 200px;
+        transition: 0.25s linear;
+      }
+
+      .quick-streak-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .quick-streak-top span {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #777777;
+      }
+
+      .quick-streak-top h3 {
+        margin: 0;
+        font-size: 23px;
+        color: #171717;
+      }
+
+      .quick-streak-icon {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        font-size: 17px;
+      }
+
+      .quick-streak-days {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 18px;
+      }
+
+      .quick-day {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid #dfe5df;
+        border-radius: 50%;
+        font-size: 10px;
+        font-weight: 600;
+        color: #888888;
+        transition: 0.25s linear;
+      }
+
+      .quick-day.active {
+        border-color: #2563eb;
+        background: #2563eb;
+        color: #ffffff;
+      }
+
+      .quick-day.today {
+        border-color: #2563eb;
+        background: #ffffff;
+        color: #2563eb;
+        box-shadow: 0 0 0 3px #e5e9f3;
+      }
+
+      .quick-streak-message {
+        margin: 14px 0 0;
+        font-size: 11px;
+        color: #888888;
+      }
+
+      #profileImage {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transform: scale(1.2);
+        display: none;
+      }
+
+      body.dark .dashboardcontainer {
+        color: #ffffff;
+      }
+
+      body.dark .dashboardtopcontainer {
+        background-color: #151c24;
+        box-shadow: 0px 0px 3px #00000080;
+      }
+
+      body.dark .dashboardtopcontainer h1 {
+        color: #ffffff;
+      }
+
+      body.dark #phrases {
+        color: #9ca6b2;
+      }
+
+      body.dark .dashboardusername {
+        color: #3b82f6;
+      }
+
+      body.dark #profilebox {
+        background-color: #1c2530;
+        border-color: #3a4653;
+        color: #ffffff;
+      }
+
+      body.dark #profilebox:hover {
+        background-color: #202d38;
+        border-color: #3b82f6;
+      }
+
+      body.dark #profileemail {
+        color: #ffffff;
+      }
+
+      body.dark .topsubjectcontainer {
+        background-color: #151c24;
+        border-color: #303943;
+        box-shadow: 0px 0px 3px #00000080;
+        color: #ffffff;
+      }
+
+      body.dark .topsubjectcontainer:hover {
+        background-color: #202d38;
+        border-color: #3b82f6;
+      }
+
+      body.dark .topsubjectcontainer h2 {
+        color: #ffffff;
+      }
+
+      body.dark .topsubjectcontainer h3 {
+        color: #9ca6b2 !important;
+      }
+
+      body.dark .bg {
+        stroke: #303943;
+      }
+
+      body.dark .progress {
+        stroke: #3b82f6;
+      }
+
+      body.dark .percent {
+        color: #d5dbe1;
+      }
+
+      body.dark .notificationsbox {
+        background-color: #151c24;
+        border-color: #303943;
+        color: #ffffff;
+        box-shadow: 0px 0px 3px #00000080;
+      }
+
+      body.dark .notificationsbox h3 {
+        color: #ffffff;
+      }
+
+      body.dark .notificationsbox svg path {
+        stroke: #d5dbe1;
+      }
+
+      body.dark .emptybox p {
+        color: #9ca6b2;
+      }
+
+      body.dark .classnotboxes {
+        background-color: #1c2530;
+        border-color: #3a4653;
+        box-shadow: 1px 1px 5px #00000040;
+      }
+
+      body.dark .classnotboxes p:last-child {
+        color: #9ca6b2;
+      }
+
+      body.dark .classnotboxes p:last-child:hover {
+        color: #ffffff;
+      }
+
+      body.dark .quick-streak {
+        background-color: #151c24;
+        border-color: #303943;
+        box-shadow: 0px 0px 3px #00000080;
+      }
+
+      body.dark .quick-streak-top span {
+        color: #9ca6b2;
+      }
+
+      body.dark .quick-streak-top h3 {
+        color: #ffffff;
+      }
+
+      body.dark .quick-streak-icon {
+        color: #3b82f6;
+      }
+
+      body.dark .quick-day {
+        background-color: #1c2530;
+        border-color: #3a4653;
+        color: #9ca6b2;
+      }
+
+      body.dark .quick-day.active {
+        background-color: #1464c8;
+        border-color: #1464c8;
+        color: #ffffff;
+      }
+
+      body.dark .quick-day.today {
+        background-color: #151c24;
+        border-color: #3b82f6;
+        color: #3b82f6;
+        box-shadow: 0 0 0 3px #234328;
+      }
+
+      body.dark .quick-streak-message {
+        color: #9ca6b2;
+      }
+
+      body.dark #startPracticeBtn {
+        background-color: #1464c8;
+      }
+
+      body.dark #profileimg {
+        background-color: #1464c8;
+      }
+
+      @media (max-width: 600px) {
+        .dashboardcontainer {
+          padding-top: 40px;
+        }
+
+        .emptybox {
+          width: 60%;
+        }
+
+        #ovtext {
+          font-size: 15px;
+          margin-left: 0px;
+        }
+
+        .dashboardtopcontainer {
+          display: grid;
+          justify-items: center;
+          align-content: center;
+        }
+
+        .quick-streak {
+        }
+
+        #profilebox {
+          padding: 5px 9px;
+        }
+
+        #profileemail {
+          font-size: 13px;
+        }
+
+        #phrases {
+          font-size: 13px;
+        }
+
+        .dashboardtopcontainer h1 {
+          font-size: 24px;
+        }
+
+        .topsubjectcontainer {
+          display: flex;
+          align-content: center;
+        }
+
+        .bottomquicks {
+          justify-content: center;
+        }
+
+        #profilebox {
+          order: 1;
+          margin: 5px auto;
+          margin-bottom: 30px;
+        }
+
+        #namebox {
+          order: 2;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="dashboardcontainer">
+      <div class="dashboardtopcontainer">
+        <div id="namebox">
+          <h1>
+            Hi,
+            <span id="username" class="dashboardusername">loading...</span>
+          </h1>
+
+          <p id="phrases">Your journey to exam mastery starts here👋</p>
+        </div>
+
+        <div id="profilebox" data-page="profile">
+          <div id="profileimg">
+            <img src="" alt="" id="profileImage" />
+            <p id="profiletext"></p>
+          </div>
+
+          <p id="profileemail">loading..</p>
+        </div>
+      </div>
+
+      <div id="topprogressbox">
+        <div class="topsubjectcontainer" data-page="progress" id="tsprogress">
+          <div class="progress-container" data-value="50">
+            <svg class="progress-ring" width="120" height="120">
+              <circle class="bg" cx="60" cy="60" r="50" />
+              <circle class="progress" cx="60" cy="60" r="50" />
+            </svg>
+
+            <div class="percent">0%</div>
+          </div>
+
+          <div id="repair">
+            <h2 id="ovtext">Overall Progress</h2>
+          </div>
+        </div>
+
+        <div class="topsubjectcontainer" data-page="history">
+          <div style="width: 100%; display: grid">
+            <h2 id="completedtext">Tests Completed</h2>
+            <h3 style="color: #6d6d6d; margin-top: 3px" id="testsCompleted">
+              0
+            </h3>
+            <div></div>
+          </div>
+        </div>
+
+        <div class="topsubjectcontainer" data-page="subjects">
+          <div style="width: 100%; display: grid">
+            <h2 id="completedtext">Total Score</h2>
+            <h3 style="color: #6d6d6d; margin-top: 3px" id="totalScore">0</h3>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottomquicks">
+        <div class="notificationsbox">
+          <div class="nottext">
+            <h3>LeaderBoard</h3>
+          </div>
+
+          <div class="notificationcontainer">
+            <div class="emptybox">
+              <p>LeaderBoard coming soon! 🎉🎊</p>
+            </div>
+
+            <div class="classnotboxes" style="color: #a20000">
+              <p id="notificationinfo">2 days streak lost!</p>
+              <p>&times;</p>
+            </div>
+
+            <div class="classnotboxes" style="color: #2563eb">
+              <p id="notificationinfo">+30 exp obtained</p>
+              <p>&times;</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-streak" data-page="progress">
+          <div class="quick-streak-top">
+            <div>
+              <span>Daily Streak</span>
+              <h3>0 days</h3>
+            </div>
+
+            <div class="quick-streak-icon">🔥</div>
+          </div>
+
+          <div class="quick-streak-days">
+            <div class="quick-day">M</div>
+            <div class="quick-day">T</div>
+            <div class="quick-day">W</div>
+            <div class="quick-day">T</div>
+            <div class="quick-day">F</div>
+            <div class="quick-day">S</div>
+            <div class="quick-day">S</div>
+          </div>
+
+          <p class="quick-streak-message">Keep your streak going!</p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
