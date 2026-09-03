@@ -14,7 +14,7 @@ const routes = {
 };
 
 const pageScripts = {
-  dashboard: "./dashboard/pages/dashboard.js",
+  dashboard: "../pages/dashboard.js",
   practice: "./dashboard/pages/practice.js",
   pastquestions: "./dashboard/pages/pastquestions.js",
   subjects: "./dashboard/pages/subjects.js",
