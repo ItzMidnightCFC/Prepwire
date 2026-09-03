@@ -15,17 +15,17 @@ const routes = {
 
 const pageScripts = {
   dashboard: "../pages/dashboard.js",
-  practice: "./dashboard/pages/practice.js",
-  pastquestions: "./dashboard/pages/pastquestions.js",
-  subjects: "./dashboard/pages/subjects.js",
-  progress: "./dashboard/pages/progress.js",
-  leaderboard: "./dashboard/pages/leaderboard.js",
-  overall: "./dashboard/pages/leaderboardpages/overall.js",
-  leadsubjects: "./dashboard/pages/leaderboardpages/leadsubjects.js",
-  weeklypoints: "./dashboard/pages/leaderboardpages/weeklypoints.js",
-  history: "./dashboard/pages/history.js",
-  profile: "./dashboard/pages/profile.js",
-  settings: "./dashboard/pages/settings.js",
+  practice: "../pages/practice.js",
+  pastquestions: "../pages/pastquestions.js",
+  subjects: "../pages/subjects.js",
+  progress: "../pages/progress.js",
+  leaderboard: "../pages/leaderboard.js",
+  overall: "../pages/leaderboardpages/overall.js",
+  leadsubjects: "../pages/leaderboardpages/leadsubjects.js",
+  weeklypoints: "..pages/leaderboardpages/weeklypoints.js",
+  history: "..pages/history.js",
+  profile: "..pages/profile.js",
+  settings: "..pages/settings.js",
 };
 
 let currentPage = "dashboard";
