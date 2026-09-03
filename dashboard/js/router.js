@@ -22,10 +22,10 @@ const pageScripts = {
   leaderboard: "../pages/leaderboard.js",
   overall: "../pages/leaderboardpages/overall.js",
   leadsubjects: "../pages/leaderboardpages/leadsubjects.js",
-  weeklypoints: "..pages/leaderboardpages/weeklypoints.js",
-  history: "..pages/history.js",
-  profile: "..pages/profile.js",
-  settings: "..pages/settings.js",
+  weeklypoints: "../pages/leaderboardpages/weeklypoints.js",
+  history: "../pages/history.js",
+  profile: "../pages/profile.js",
+  settings: "../pages/settings.js",
 };
 
 let currentPage = "dashboard";
