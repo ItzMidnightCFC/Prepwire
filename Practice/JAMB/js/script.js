@@ -38,3 +38,7 @@ function loadGlobalSettings() {
 }
 
 loadGlobalSettings();
+
+document.addEventListener("selectstart", (e) => {
+  e.preventDefault();
+});
