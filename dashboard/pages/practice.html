@@ -21,7 +21,6 @@
           opacity 0.25s linear,
           color 0.25s linear;
         text-align: center;
-        padding-bottom: 20px;
       }
 
       .practicebody.remove {
@@ -180,7 +179,7 @@
 
       .startbtn {
         background: #2563eb;
-        border:none;
+        border: none;
         color: #ffffff;
         font-size: 17px;
         display: flex;
@@ -329,8 +328,16 @@
         stroke: #fff;
       }
 
+      body.dark .changecolor {
+        fill: #151c24;
+      }
+
+      body.dark .changecolors {
+        stroke: #151c24;
+      }
+
       @media (max-width: 600px) {
-        .practicebody{
+        .practicebody {
           padding-top: 40px;
         }
         .practicetext {
@@ -351,7 +358,6 @@
         }
 
         #selectcover {
-          
         }
 
         .inputs {
@@ -374,43 +380,139 @@
 
       <div class="examsbox">
         <div class="freepracticecontainer" id="jambbutton">
-          <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
           <svg
             width="50px"
             height="50px"
-            viewBox="0 0 24 24"
+            viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
+            <!-- Outer Circle -->
+            <circle cx="60" cy="60" r="54" fill="#2563EB" />
+
+            <!-- Inner Circle -->
+            <circle cx="60" cy="60" r="45" fill="#ffffff" class="changecolor" />
+
+            <!-- Computer Screen -->
+            <rect x="36" y="38" width="48" height="34" rx="5" fill="#2563EB" />
+
+            <!-- Screen -->
+            <rect
+              x="41"
+              y="43"
+              width="38"
+              height="24"
+              rx="2"
+              fill="#fff"
+              class="changecolor"
+            />
+
+            <!-- Screen Check -->
             <path
-              d="M22 9L12 4L2 9L12 14L22 9ZM22 9V15M19 10.5V16.5L12 20L5 16.5V10.5"
-              stroke="#000000"
-              stroke-width="2"
+              d="M49 55L55 61L70 48"
+              stroke="#2563EB"
+              stroke-width="4"
               stroke-linecap="round"
               stroke-linejoin="round"
-              id="colorhat"
             />
+
+            <!-- Computer Stand -->
+            <path
+              d="M52 78H68"
+              stroke="#2563EB"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+
+            <path
+              d="M60 72V78"
+              stroke="#2563EB"
+              stroke-width="5"
+              stroke-linecap="round"
+            />
+
+            <!-- JAMB Text -->
+            <text
+              x="60"
+              y="96"
+              text-anchor="middle"
+              font-family="Arial, sans-serif"
+              font-size="11"
+              font-weight="800"
+              fill="#2563EB"
+            >
+              JAMB
+            </text>
           </svg>
           <h3>JAMB PRACTICE</h3>
         </div>
 
         <div class="freepracticecontainer" id="wasscebutton">
-          <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
           <svg
-            width="50px"
-            height="50px"
-            viewBox="0 0 24 24"
+            width="50"
+            height="50"
+            viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
+            <circle cx="60" cy="60" r="54" fill="#2563EB" />
+
+            <circle cx="60" cy="60" r="45" fill="white" class="changecolor" />
+
+            <!-- Left book -->
             <path
-              d="M22 9L12 4L2 9L12 14L22 9ZM22 9V15M19 10.5V16.5L12 20L5 16.5V10.5"
-              stroke="#000000"
-              id="colorhat"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M35 42C35 39.8 36.8 38 39 38H55C58.3 38 60 40.2 60 43V80C58.5 77.8 56.2 76 53 76H39C36.8 76 35 74.2 35 72V42Z"
+              fill="#2563EB"
             />
+
+            <!-- Right book -->
+            <path
+              d="M85 42C85 39.8 83.2 38 81 38H65C61.7 38 60 40.2 60 43V80C61.5 77.8 63.8 76 67 76H81C83.2 76 85 74.2 85 72V42Z"
+              fill="#2563EB"
+            />
+
+            <!-- Book lines -->
+            <path
+              d="M42 48H53"
+              stroke="white"
+              stroke-width="3"
+              stroke-linecap="round"
+              class="changecolors"
+            />
+            <path
+              d="M42 56H53"
+              stroke="white"
+              stroke-width="3"
+              stroke-linecap="round"
+              class="changecolors"
+            />
+            <path
+              d="M67 48H78"
+              stroke="white"
+              stroke-width="3"
+              stroke-linecap="round"
+              class="changecolors"
+            />
+            <path
+              d="M67 56H78"
+              stroke="white"
+              stroke-width="3"
+              stroke-linecap="round"
+              class="changecolors"
+            />
+
+            <!-- WAEC -->
+            <text
+              x="60"
+              y="94"
+              text-anchor="middle"
+              font-family="Arial, sans-serif"
+              font-size="11"
+              font-weight="800"
+              fill="#2563EB"
+            >
+              WAEC
+            </text>
           </svg>
           <h3>WASSCE PRACTICE</h3>
         </div>

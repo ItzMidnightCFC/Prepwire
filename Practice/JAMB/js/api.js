@@ -152,22 +152,22 @@ function showQuestion() {
     <div class="options">
       <div>
         <input type="radio" name="option" value="a">
-        <label>${q.option.a}</label>
+        <label>A. ${q.option.a}</label>
       </div>
 
       <div>
         <input type="radio" name="option" value="b">
-        <label>${q.option.b}</label>
+        <label>B. ${q.option.b}</label>
       </div>
 
       <div>
         <input type="radio" name="option" value="c">
-        <label>${q.option.c}</label>
+        <label>C. ${q.option.c}</label>
       </div>
 
       <div>
         <input type="radio" name="option" value="d">
-        <label>${q.option.d}</label>
+        <label>D. ${q.option.d}</label>
       </div>
     </div>
   `;
@@ -230,6 +230,8 @@ async function savePracticeSession(score, timeTaken) {
 
   isSavingSession = true;
 
+  const XP_PER_CORRECT = 10;
+
   try {
     const {
       data: { user },
@@ -248,6 +250,10 @@ async function savePracticeSession(score, timeTaken) {
       ? Math.round((score / questions.length) * 100)
       : 0;
 
+    // ==========================================
+    // 1. SAVE PRACTICE SESSION
+    // ==========================================
+
     const { error: sessionError } = await supabase
       .from("practice_sessions")
       .insert({
@@ -260,6 +266,10 @@ async function savePracticeSession(score, timeTaken) {
     if (sessionError) {
       throw sessionError;
     }
+
+    // ==========================================
+    // 2. SAVE PRACTICE HISTORY
+    // ==========================================
 
     const { error: historyError } = await supabase
       .from("practice_history")
@@ -282,13 +292,255 @@ async function savePracticeSession(score, timeTaken) {
       );
 
       await recordStreak();
-
       return;
     }
 
+    // ==========================================
+    // 3. GET ALL PRACTICE HISTORY
+    // ==========================================
+
+    const { data: history, error: historyFetchError } = await supabase
+      .from("practice_history")
+      .select(
+        `
+        user_id,
+        subject,
+        correct_answers,
+        completed_at
+      `,
+      )
+      .eq("user_id", user.id);
+
+    if (historyFetchError) {
+      console.error("Failed to fetch practice history:", historyFetchError);
+
+      showToast(
+        "Practice saved, but leaderboard XP could not be updated.",
+        "error",
+      );
+
+      await recordStreak();
+      return;
+    }
+
+    const practices = history || [];
+
+    // ==========================================
+    // 4. XP CALCULATION
+    // ==========================================
+
+    const overallXP = practices.reduce((total, practice) => {
+      return total + Number(practice.correct_answers || 0) * XP_PER_CORRECT;
+    }, 0);
+
+    // ==========================================
+    // 5. CALCULATE THIS WEEK'S XP
+    // MONDAY → NOW
+    // ==========================================
+
+    const now = new Date();
+
+    const day = now.getDay();
+
+    const daysSinceMonday = day === 0 ? 6 : day - 1;
+
+    const monday = new Date(now);
+
+    monday.setDate(now.getDate() - daysSinceMonday);
+    monday.setHours(0, 0, 0, 0);
+
+    const weeklyXP = practices.reduce((total, practice) => {
+      if (!practice.completed_at) {
+        return total;
+      }
+
+      const completedAt = new Date(practice.completed_at);
+
+      if (completedAt >= monday) {
+        return total + Number(practice.correct_answers || 0) * XP_PER_CORRECT;
+      }
+
+      return total;
+    }, 0);
+
+    // ==========================================
+    // 6. UPDATE OVERALL + WEEKLY XP
+    // ==========================================
+
+    const { data: existingStats, error: statsFetchError } = await supabase
+      .from("user_stats")
+      .select("user_id")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (statsFetchError) {
+      console.error("Failed to fetch user stats:", statsFetchError);
+
+      showToast(
+        "Practice saved, but leaderboard XP could not be updated.",
+        "error",
+      );
+
+      await recordStreak();
+      return;
+    }
+
+    if (existingStats) {
+      const { error: statsUpdateError } = await supabase
+        .from("user_stats")
+        .update({
+          overall_xp: overallXP,
+          weekly_xp: weeklyXP,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("user_id", user.id);
+
+      if (statsUpdateError) {
+        console.error("Failed to update user stats:", statsUpdateError);
+
+        showToast(
+          "Practice saved, but leaderboard XP could not be updated.",
+          "error",
+        );
+
+        await recordStreak();
+        return;
+      }
+    } else {
+      const { error: statsInsertError } = await supabase
+        .from("user_stats")
+        .insert({
+          user_id: user.id,
+          overall_xp: overallXP,
+          weekly_xp: weeklyXP,
+          updated_at: new Date().toISOString(),
+        });
+
+      if (statsInsertError) {
+        console.error("Failed to create user stats:", statsInsertError);
+
+        showToast(
+          "Practice saved, but leaderboard XP could not be created.",
+          "error",
+        );
+
+        await recordStreak();
+        return;
+      }
+    }
+
+    // ==========================================
+    // 7. GET USER PROFILE
+    // ==========================================
+
+    const { data: profile, error: profileError } = await supabase
+      .from("users")
+      .select("user_id, full_name, avatar_url")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (profileError) {
+      console.error("Failed to fetch user profile:", profileError);
+    }
+
+    const fullName = profile?.full_name || "Student";
+    const avatarUrl = profile?.avatar_url || null;
+
+    // ==========================================
+    // 8. CALCULATE XP FOR EVERY SUBJECT
+    // ==========================================
+
+    const subjectXPMap = {};
+
+    practices.forEach((practice) => {
+      if (!practice.subject) return;
+
+      if (!subjectXPMap[practice.subject]) {
+        subjectXPMap[practice.subject] = 0;
+      }
+
+      subjectXPMap[practice.subject] +=
+        Number(practice.correct_answers || 0) * XP_PER_CORRECT;
+    });
+
+    // ==========================================
+    // 9. UPDATE SUBJECT LEADERBOARDS
+    // ==========================================
+
+    for (const [subject, subjectXP] of Object.entries(subjectXPMap)) {
+      const { data: existingSubject, error: subjectFetchError } = await supabase
+        .from("leaderboard_profiles")
+        .select("user_id, subject")
+        .eq("user_id", user.id)
+        .eq("subject", subject)
+        .maybeSingle();
+
+      if (subjectFetchError) {
+        console.error(
+          `Failed to check ${subject} leaderboard:`,
+          subjectFetchError,
+        );
+
+        continue;
+      }
+
+      if (existingSubject) {
+        const { error: subjectUpdateError } = await supabase
+          .from("leaderboard_profiles")
+          .update({
+            xp: subjectXP,
+            full_name: fullName,
+            avatar_url: avatarUrl,
+          })
+          .eq("user_id", user.id)
+          .eq("subject", subject);
+
+        if (subjectUpdateError) {
+          console.error(
+            `Failed to update ${subject} leaderboard:`,
+            subjectUpdateError,
+          );
+        }
+      } else {
+        const { error: subjectInsertError } = await supabase
+          .from("leaderboard_profiles")
+          .insert({
+            user_id: user.id,
+            subject,
+            xp: subjectXP,
+            full_name: fullName,
+            avatar_url: avatarUrl,
+          });
+
+        if (subjectInsertError) {
+          console.error(
+            `Failed to create ${subject} leaderboard profile:`,
+            subjectInsertError,
+          );
+        }
+      }
+    }
+
+    // ==========================================
+    // 10. RECORD STREAK
+    // ==========================================
+
     await recordStreak();
 
-    showToast("Progress saved successfully.", "success");
+    // ==========================================
+    // 11. SUCCESS
+    // ==========================================
+
+    const earnedXP = score * XP_PER_CORRECT;
+
+    showToast(`Practice saved! +${earnedXP} XP`, "success");
+
+    console.log("Practice saved successfully.");
+    console.log("Correct answers:", score);
+    console.log("XP earned:", earnedXP);
+    console.log("Overall XP:", overallXP);
+    console.log("Weekly XP:", weeklyXP);
+    console.log("Subject XP:", subjectXPMap);
   } catch (error) {
     console.error("Failed to save practice session:", error);
 
@@ -408,7 +660,7 @@ async function submitTest() {
 
   nextbtn.textContent = "Continue";
   nextbtn.addEventListener("click", () => {
-    window.location.href="../../dashboard";
+    window.location.href = "../../dashboard";
   });
 
   await savePracticeSession(score, timeTaken);

@@ -1,0 +1,451 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .leaderboardbody {
+        padding: 0px 0px;
+      }
+      .leaderboardtext {
+        margin: 30px;
+        font-size: 30px;
+        color: #000000bb;
+      }
+
+      .leaderconbox {
+        width: 70%;
+        margin: 20px auto;
+      }
+
+      .leaderboxes {
+        background-color: #fff;
+        width: 90%;
+        margin: 20px auto;
+
+        max-height: 100px;
+        border-radius: 16px;
+        border: 1px #dadada solid;
+        display: flex;
+        align-items: center;
+        padding: 20px 20px;
+        cursor: pointer;
+        transition: 0.125s linear;
+      }
+
+      .leaderboxes svg {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+
+      .leaderboxes:hover {
+        background-color: #f8fbff;
+        border-color: #2563eb;
+        box-shadow: 0 6px 18px #2563eb15;
+        transform: translateY(-2px);
+      }
+
+      .leaderboxes h3 {
+        font-weight: 500;
+        font-size: 16px;
+      }
+
+      /* =========================
+   DARK THEME
+========================= */
+
+      body.dark {
+        background-color: #0f172a;
+        color: #f8fafc;
+      }
+
+      body.dark .leaderboardtext {
+        color: #f8fafc;
+      }
+
+      body.dark .leaderboxes {
+        background-color: #151c24;
+        border-color: #303943;
+        box-shadow: 0 4px 14px #00000040;
+      }
+
+      body.dark .leaderboxes:hover {
+        background-color: #202b38;
+        border-color: #2563eb;
+        box-shadow: 0 6px 18px #00000045;
+      }
+
+      body.dark .leaderboxes h3 {
+        color: #f8fafc;
+      }
+
+      @media (max-width: 600px) {
+        .leaderboardbody {
+          padding-top: 40px;
+        }
+
+        .leaderboardtext {
+          font-size: 26px;
+        }
+
+        .leaderboxes svg {
+          margin-left: 0px;
+          margin-right: 10px;
+        }
+
+        .leaderconbox {
+          width: 80%;
+        }
+
+        .leaderconbox h3 {
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="leaderboardbody">
+      <h1 class="leaderboardtext">Leaderboard</h1>
+      <div class="leaderconbox">
+        <div class="leaderboxes" data-page="overall">
+          <svg viewBox="0 0 72 72" width="50px" width="50px">
+            <path
+              d="
+    M27 35
+    C21 30 17 23 16 15
+    C11 16 6 19 2 24
+    C7 23 11 24 14 27
+    C9 27 5 30 2 34
+    C8 32 13 33 17 36
+    C11 37 7 40 4 44
+    C11 42 17 42 22 44
+    C18 46 15 49 13 53
+    C19 50 24 47 29 43
+    Z"
+              fill="#2563EB"
+            />
+
+            <!-- LEFT WING GOLD EDGE -->
+            <path
+              d="
+    M24 37
+    C19 31 17 25 17 18
+    C14 20 11 22 9 25
+    C14 24 18 26 20 29
+    C15 29 12 31 9 34
+    C14 33 18 34 21 37
+    C17 38 15 40 13 42
+    C18 41 22 41 26 42"
+              stroke="#60A5FA"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+
+            <!-- RIGHT EAGLE WING -->
+            <path
+              d="
+    M45 35
+    C51 30 55 23 56 15
+    C61 16 66 19 70 24
+    C65 23 61 24 58 27
+    C63 27 67 30 70 34
+    C64 32 59 33 55 36
+    C61 37 65 40 68 44
+    C61 42 55 42 50 44
+    C54 46 57 49 59 53
+    C53 50 48 47 43 43
+    Z"
+              fill="#2563EB"
+            />
+
+            <!-- RIGHT WING GOLD EDGE -->
+            <path
+              d="
+    M48 37
+    C53 31 55 25 55 18
+    C58 20 61 22 63 25
+    C58 24 54 26 52 29
+    C57 29 60 31 63 34
+    C58 33 54 34 51 37
+    C55 38 57 40 59 42
+    C54 41 50 41 46 42"
+              stroke="#60A5FA"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+
+            <!-- LEFT GOLD FEATHER TIPS -->
+            <path
+              d="M17 27L9 25M18 34L9 34M20 40L13 42"
+              stroke="#FBBF24"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+
+            <!-- RIGHT GOLD FEATHER TIPS -->
+            <path
+              d="M55 27L63 25M54 34L63 34M52 40L59 42"
+              stroke="#FBBF24"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+
+            <!-- TROPHY HANDLES -->
+            <path
+              d="M25 29H20C17 29 16 32 17 35C18 39 21 41 25 41"
+              stroke="#D97706"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+
+            <path
+              d="M47 29H52C55 29 56 32 55 35C54 39 51 41 47 41"
+              stroke="#D97706"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+
+            <!-- TROPHY -->
+            <path
+              d="M26 21H46V32C46 38 42 42 36 42C30 42 26 38 26 32V21Z"
+              fill="#FBBF24"
+            />
+
+            <!-- TROPHY HIGHLIGHT -->
+            <path
+              d="M30 24V31C30 35 32 38 35 39"
+              stroke="#FDE68A"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+
+            <!-- ROYAL CROWN -->
+            <path
+              d="M25 21L27 11L32 17L36 7L40 17L45 11L47 21H25Z"
+              fill="#F59E0B"
+            />
+
+            <!-- CROWN HIGHLIGHT -->
+            <path
+              d="M28 17L32 19L36 11L40 19L44 17"
+              stroke="#FDE68A"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+
+            <!-- CROWN JEWELS -->
+            <circle cx="36" cy="12" r="1.5" fill="#2563EB" />
+            <circle cx="29" cy="17" r="1.2" fill="#2563EB" />
+            <circle cx="43" cy="17" r="1.2" fill="#2563EB" />
+
+            <!-- STEM -->
+            <path d="M33 42H39V50H33V42Z" fill="#D97706" />
+
+            <!-- BASE -->
+            <path
+              d="M28 50H44C45.1 50 46 50.9 46 52V54H26V52C26 50.9 26.9 50 28 50Z"
+              fill="#F59E0B"
+            />
+
+            <path
+              d="M28 52H44"
+              stroke="#FDE68A"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+
+            <!-- BLUE FOUNDATION -->
+            <path
+              d="M23 57H49"
+              stroke="#2563EB"
+              stroke-width="3"
+              stroke-linecap="round"
+            />
+          </svg>
+          <h3>OVERALL LEADERBOARD</h3>
+        </div>
+        <div class="leaderboxes" data-page="leadsubjects">
+          <svg
+            width="50px"
+            height="50px"
+            viewBox="0 0 72 72"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- LEFT WING -->
+            <path
+              d="M29 34C23 30 19 24 18 17C12 18 7 22 3 27C9 25 14 27 18 30C12 30 7 33 3 38C10 36 16 38 21 41C17 43 14 47 12 51C19 48 25 44 30 39Z"
+              fill="#2563EB"
+            />
+
+            <!-- RIGHT WING -->
+            <path
+              d="M43 34C49 30 53 24 54 17C60 18 65 22 69 27C63 25 58 27 54 30C60 30 65 33 69 38C62 36 56 38 51 41C55 43 58 47 60 51C53 48 47 44 42 39Z"
+              fill="#2563EB"
+            />
+
+            <!-- LEFT FEATHERS -->
+            <path
+              d="M20 29C16 26 12 25 8 26"
+              stroke="#60A5FA"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M22 35C17 33 12 34 8 36"
+              stroke="#60A5FA"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M25 40C21 41 18 44 16 47"
+              stroke="#93C5FD"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+
+            <!-- RIGHT FEATHERS -->
+            <path
+              d="M52 29C56 26 60 25 64 26"
+              stroke="#60A5FA"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M50 35C55 33 60 34 64 36"
+              stroke="#60A5FA"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M47 40C51 41 54 44 56 47"
+              stroke="#93C5FD"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+
+            <!-- MEDAL RIBBON -->
+            <path
+              d="M29 10L33 25H39L43 10L38 14L36 8L34 14L29 10Z"
+              fill="#F59E0B"
+            />
+
+            <!-- MEDAL -->
+            <circle
+              cx="36"
+              cy="39"
+              r="16"
+              fill="#FBBF24"
+              stroke="#D97706"
+              stroke-width="2.5"
+            />
+
+            <!-- INNER MEDAL -->
+            <circle cx="36" cy="39" r="12" stroke="#FDE68A" stroke-width="2" />
+
+            <!-- BOOK -->
+            <path
+              d="M27 34C30 32 33 33 36 35C39 33 42 32 45 34V47C42 45 39 45 36 47C33 45 30 45 27 47V34Z"
+              fill="#2563EB"
+            />
+
+            <!-- BOOK CENTER -->
+            <path
+              d="M36 35V47"
+              stroke="#BFDBFE"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+
+            <!-- BOOK PAGE DETAILS -->
+            <path
+              d="M29 36C31 35 33 36 35 37M43 36C41 35 39 36 37 37"
+              stroke="#DBEAFE"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+
+            <!-- MEDAL SHINE -->
+            <path
+              d="M29 34C31 31 33 30 36 30"
+              stroke="#FFF7D6"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+
+          <h3>SUBJECT LEADERBOARDS</h3>
+        </div>
+
+        <div class="leaderboxes" data-page="weeklypoints">
+          <svg
+            width="50px"
+            height="50px"
+            viewBox="0 0 72 72"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- LEFT WING -->
+            <path
+              d="M29 34C24 31 21 27 20 22C16 23 12 25 9 29C13 28 17 29 20 31C16 31 12 34 9 37C14 36 19 37 23 39C21 41 19 43 18 46C23 44 27 41 30 38Z"
+              fill="#2563EB"
+            />
+
+            <!-- RIGHT WING -->
+            <path
+              d="M43 34C48 31 51 27 52 22C56 23 60 25 63 29C59 28 55 29 52 31C56 31 60 34 63 37C58 36 53 37 49 39C51 41 53 43 54 46C49 44 45 41 42 38Z"
+              fill="#2563EB"
+            />
+
+            <!-- FEATHER ACCENTS -->
+            <path
+              d="M21 30L14 28M23 35L15 35M26 39L21 43"
+              stroke="#60A5FA"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+
+            <path
+              d="M51 30L58 28M49 35L57 35M46 39L51 43"
+              stroke="#60A5FA"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+
+            <!-- MEDAL RIBBON -->
+            <path
+              d="M30 13L33 25H39L42 13L38 16L36 11L34 16L30 13Z"
+              fill="#2563EB"
+            />
+
+            <!-- MEDAL -->
+            <circle
+              cx="36"
+              cy="38"
+              r="14"
+              fill="#FBBF24"
+              stroke="#D97706"
+              stroke-width="2.5"
+            />
+
+            <!-- INNER RING -->
+            <circle cx="36" cy="38" r="10" stroke="#FDE68A" stroke-width="2" />
+
+            <!-- LIGHTNING -->
+            <path d="M39 29L32 38H36L33 46L41 36H37L39 29Z" fill="#2563EB" />
+
+            <!-- MEDAL SHINE -->
+            <path
+              d="M30 34C31 31 34 29 36 29"
+              stroke="#FFF7D6"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <h3>WEEKLY RANKINGS</h3>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

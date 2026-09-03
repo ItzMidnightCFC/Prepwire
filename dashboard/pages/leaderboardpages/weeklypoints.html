@@ -1,0 +1,306 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <style>
+    .weeklybox {
+      background: #fff;
+      margin: 30px;
+      border-radius: 16px;
+      border: 1px #e8e8e8 solid;
+      padding-top: 10px;
+      overflow: hidden;
+    }
+
+    .weeklybox h3 {
+      margin: 10px;
+      margin-bottom: 5px;
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .weekdetails {
+      border-bottom: 1px solid #d2d4e4;
+      padding: 10px;
+      padding-top: 0;
+      color: #6b6b6b;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .weekrank {
+      margin-left: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .weekicons svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .weekprofile {
+      border-radius: 50%;
+      background-color: #2563eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      margin-left: 10px;
+      margin-right: 10px;
+      height: 30px;
+      width: 30px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .weekprofile img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 50%;
+    }
+
+    .weekprofile p {
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .weekname {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 500;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      min-width: 0;
+      max-width: 75%;
+    }
+
+    .weekxp {
+      margin-left: auto;
+      margin-right: 20px;
+      color: #6b6b6b;
+      font-size: 12px;
+    }
+
+    .weekboxes {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0px;
+      border-bottom: 1px #e8e8e8 solid;
+    }
+
+    .weekboxes:last-child {
+      border-bottom: none;
+    }
+
+    .weekboxes.current-user {
+      background: #eff6ff;
+      border-left: 3px solid #2563eb;
+      border-right: 3px solid #2563eb;
+    }
+
+    .floatingdetails {
+      position: sticky;
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      bottom: 3%;
+      margin-left: auto;
+      right: 5%;
+      width: max-content;
+      height: min-content;
+    }
+
+    .floatingcover {
+      display: flex;
+      align-items: center;
+
+      height: 100%;
+    }
+
+    .fposition {
+      margin-right: 10px;
+      color: #2563eb;
+    }
+
+    .floatingusername {
+      margin-right: 10px;
+      font-size: 15px;
+    }
+
+    .floatinguserxp {
+      color: #6b6b6b;
+      font-size: 12px;
+    }
+
+    .floatinguserxp span {
+      font-weight: 600;
+    }
+    
+    
+    @media (max-width:700px){
+      .weeklycontainer{
+        padding-top: 70px;
+      }
+      .weeklybox{
+          margin: 30px 10px;
+          padding-top:20px
+      }
+      .weekname{
+          width:70%
+      }
+      .weekxp{
+          text-align:center
+      }
+    }
+    
+    /* =========================
+   DARK MODE
+========================= */
+
+
+
+body.dark .weeklybox {
+  background: #151c24;
+  border-color: #263244;
+}
+
+body.dark .weeklybox h3 {
+  color: #f8fafc;
+}
+
+body.dark .weekdetails {
+  color: #94a3b8;
+  border-bottom-color: #263244;
+}
+
+body.dark .weekboxes {
+  border-bottom-color: #263244;
+}
+
+body.dark .weekrank {
+  color: #cbd5e1;
+}
+
+body.dark .weekname {
+  color: #f1f5f9;
+}
+
+body.dark .weekxp {
+  color: #94a3b8;
+}
+
+body.dark .weekboxes.current-user {
+  background: #172554;
+  border-left-color: #3b82f6;
+  border-right-color: #3b82f6;
+}
+
+body.dark .floatingdetails {
+  background: #151c24;
+  border-color: #334155;
+}
+
+body.dark .floatingusername {
+  color: #f1f5f9;
+}
+
+body.dark .floatinguserxp {
+  color: #94a3b8;
+}
+
+body.dark .fposition {
+  color: #60a5fa;
+}
+  </style>
+  <body>
+    <div class="weeklycontainer">
+      <div class="weeklybox">
+        <h3>Weekly Rankings</h3>
+        <p class="weekdetails">Students with the highest weekly XP</p>
+        <div class="weekboxes">
+          <p class="weekrank">1</p>
+          <div class="weekicons">
+            <svg
+              width="50px"
+              height="50px"
+              viewBox="0 0 72 72"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M13 8L24 31L36 17L48 31L59 8" fill="#2563EB" />
+              <path
+                d="M13 8L24 31L36 17L48 31L59 8"
+                stroke="#1D4ED8"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M25 8L31 22"
+                stroke="#60A5FA"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <path
+                d="M47 8L41 22"
+                stroke="#60A5FA"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <circle
+                cx="36"
+                cy="45"
+                r="20"
+                fill="#F5B942"
+                stroke="#D89A16"
+                stroke-width="3"
+              />
+              <circle cx="36" cy="45" r="15" fill="#FFD76A" />
+              <text
+                x="36"
+                y="52"
+                text-anchor="middle"
+                font-family="Arial, sans-serif"
+                font-size="23"
+                font-weight="700"
+                fill="#A66A00"
+              >
+                1
+              </text>
+            </svg>
+          </div>
+          <div class="weekprofile">
+            <p>.</p>
+          </div>
+
+          <p class="weekname">..</p>
+
+          <p class="weekxp">
+            0
+            <span style="font-weight: 600">XP</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="floatingdetails">
+        <div class="floatingcover">
+          <h3 class="fposition" id="fPosition">#0</h3>
+          <p class="floatingusername" class="floatingName">.....</p>
+          <p class="floatinguserxp" id="floatingXP">0<span>XP</span></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Overall Leaderboard</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+
+        background: #f8faff;
+        color: #000;
+      }
+
+      .overallcontainer {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 40px;
+      }
+
+      /* ==========================================
+       HEADER
+    ========================================== */
+
+      .ovtext {
+        color: #000000;
+        margin: 30px;
+        margin-bottom: 0;
+        font-size: 25px;
+      }
+
+      .subovtext {
+        color: #6b6b6b;
+        font-size: 13px;
+        margin: 5px 40px;
+        font-weight: normal;
+      }
+
+      /* ==========================================
+       TOP 3 CONTAINER
+    ========================================== */
+
+      .ovboxcons {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 0;
+      }
+
+      /* ==========================================
+       TOP 3 CARDS
+    ========================================== */
+
+      .ovtopbox {
+        display: grid;
+        justify-items: center;
+        background-color: white;
+        border-radius: 16px 16px 0 0;
+        padding: 5px 10px;
+        width: 200px;
+        border: 1px solid #e8e8e8;
+        border-bottom: 2px ridge #2563eb;
+        margin: 0 10px;
+        overflow: hidden;
+        transition: 0.25s linear;
+        cursor: pointer;
+      }
+
+      .ovtopbox:hover {
+        background-color: #f8fbff;
+      }
+
+      .ovtopbox:first-child {
+        padding-bottom: 25px;
+        width: 210px;
+        box-shadow: 0 0 20px #2564eb35;
+        order: 2;
+      }
+
+      .ovtopbox:last-child {
+        padding-bottom: 10px;
+        order: 3;
+      }
+
+      .ovtopbox:nth-child(2) {
+        padding-bottom: 20px;
+        order: 1;
+      }
+
+      /* ==========================================
+       RANK
+    ========================================== */
+
+      .firsticonbox {
+        margin-right: auto;
+      }
+
+      .firsticonbox p {
+        font-size: 12px;
+        color: #2563eb;
+        font-weight: 600;
+        margin: 8px 0;
+      }
+
+      /* ==========================================
+       PROFILE IMAGE
+    ========================================== */
+
+      .profileimage {
+        border-radius: 50%;
+        background-color: #2563eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        height: 80px;
+        width: 80px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .ovtopbox:first-child .profileimage {
+        height: 100px;
+        width: 100px;
+      }
+
+      /* IMPORTANT:
+       Dynamically inserted profile image
+    */
+
+      .profileimage img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
+      }
+
+      .profileimage p {
+        font-size: 20px;
+        margin: 0;
+      }
+
+      /* ==========================================
+       USERNAME
+    ========================================== */
+
+      .usernamebox {
+        margin-top: 5px;
+        max-width: 180px;
+        overflow: hidden;
+      }
+
+      .usernamebox p {
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* ==========================================
+       MEDAL SVG
+    ========================================== */
+
+      .svgposbox {
+        margin-top: 10px;
+        background-color: #ebebeb68;
+        padding: 5px 7px;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ==========================================
+       XP
+    ========================================== */
+
+      .totalscorebox {
+        margin-top: 10px;
+      }
+
+      .totalscorebox p {
+        color: #6b6b6b;
+        font-size: 13px;
+        margin: 0;
+      }
+
+      /* ==========================================
+       GLOBAL RANKINGS
+    ========================================== */
+
+      .globrankdiv {
+        background-color: #fff;
+        border: 1px solid #d2d4e4;
+        border-radius: 16px;
+        margin: 20px 30px;
+        margin-top: 30px;
+        padding: 20px 0;
+        padding-bottom: 0;
+        overflow: hidden;
+      }
+
+      .globrankdiv h3 {
+        margin: 10px;
+        margin-bottom: 5px;
+        margin-top: 0;
+        font-size: 18px;
+      }
+
+      .globdetails {
+        border-bottom: 1px solid #d2d4e4;
+        padding: 10px;
+        padding-top: 0;
+        color: #6b6b6b;
+        font-size: 12px;
+        margin: 0;
+      }
+
+      .globboxcon {
+        display: grid;
+      }
+
+      /* ==========================================
+       GLOBAL ROW
+    ========================================== */
+
+      .globboxes {
+        display: flex;
+        border-bottom: 1px solid #d2d4e4;
+        align-items: center;
+        padding: 15px 8px;
+        min-height: 62px;
+      }
+
+      .globboxes:last-child {
+        border-bottom: none;
+      }
+
+      /* ==========================================
+       GLOBAL RANK
+    ========================================== */
+
+      .globrank {
+        font-weight: 500;
+        margin: 0 15px;
+        font-size: 14px;
+        color: #6e6e6e;
+        width: 15px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      /* ==========================================
+       GLOBAL PROFILE
+    ========================================== */
+
+      .globprofile {
+        border-radius: 50%;
+        background-color: #2563eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 30px;
+        width: 30px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      /* IMPORTANT:
+       Global ranking profile image
+    */
+
+      .globprofile img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
+      }
+
+      .globprofile p {
+        margin: 0;
+        font-size: 13px;
+      }
+
+      /* ==========================================
+       GLOBAL NAME
+    ========================================== */
+
+      .globname {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        min-width: 0;
+      }
+
+      /* ==========================================
+       GLOBAL XP
+    ========================================== */
+
+      .globxp {
+        margin-left: auto;
+        margin-right: 10px;
+        color: #6b6b6b;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .floatingdetails {
+        position: sticky;
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        bottom: 3%;
+        margin-left: auto;
+        right: 5%;
+        width: max-content;
+      }
+
+      .floatingcover {
+        display: flex;
+        align-items: center;
+
+        height: 100%;
+      }
+
+      .fposition {
+        margin-right: 10px;
+        color: #2563eb;
+      }
+
+      .floatingusername {
+        margin-right: 10px;
+        font-size: 15px;
+      }
+
+      .floatinguserxp {
+        color: #6b6b6b;
+        font-size: 12px;
+      }
+
+      .floatinguserxp span {
+        font-weight: 600;
+      }
+
+      /* ==========================================
+       MOBILE
+    ========================================== */
+
+      @media (max-width: 700px) {
+        .ovtext {
+          margin: 25px 20px 0;
+          font-size: 22px;
+        }
+
+        .subovtext {
+          margin: 5px 25px;
+        }
+
+        .ovboxcons {
+          margin-top: 30px;
+          width: 100%;
+          overflow-x: auto;
+          justify-content: center;
+          padding: 0 5px;
+        }
+
+        .ovtopbox {
+          width: 145px;
+          min-width: 145px;
+          margin: 0 4px;
+        }
+
+        .ovtopbox:first-child {
+          width: 155px;
+          min-width: 155px;
+        }
+
+        .profileimage {
+          width: 65px;
+          height: 65px;
+        }
+
+        .ovtopbox:first-child .profileimage {
+          width: 80px;
+          height: 80px;
+        }
+
+        .usernamebox {
+          max-width: 130px;
+        }
+
+        .usernamebox p {
+          font-size: 14px;
+        }
+
+        .globrankdiv {
+          margin: 20px 15px;
+          margin-top: 25px;
+        }
+
+        .globboxes {
+          padding: 14px 5px;
+        }
+
+        .globrank {
+          margin: 0 8px;
+        }
+
+        .globprofile {
+          margin-left: 5px;
+          margin-right: 8px;
+        }
+
+        .globname {
+          font-size: 13px;
+        }
+
+        .globxp {
+          font-size: 12px;
+          margin-right: 8px;
+        }
+      }
+
+      /* ==========================================
+       SMALL MOBILE
+    ========================================== */
+
+      @media (max-width: 420px) {
+        .overallcontainer{
+          padding-top: 40px ;
+        }
+        .ovboxcons {
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .ovtopbox {
+          width: 135px;
+          min-width: 135px;
+        }
+
+        .ovtopbox:first-child {
+          width: 145px;
+          min-width: 145px;
+        }
+
+        .globrankdiv {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
+
+      .current-user-podium {
+        border: 2px solid #2563eb;
+
+        position: relative;
+      }
+
+      .current-user-podium::after {
+        content: "YOU";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #2563eb;
+        color: #fff;
+        font-size: 9px;
+        font-weight: 700;
+        padding: 4px 7px;
+        border-radius: 20px;
+        letter-spacing: 0.5px;
+      }
+
+      .current-user-ranking {
+        background: #eff6ff;
+        border-left: 3px solid #2563eb;
+      }
+
+      .current-user-ranking .globrank {
+        color: #2563eb;
+        font-weight: 700;
+      }
+
+      .current-user-ranking .globname {
+        color: #2563eb;
+        font-weight: 600;
+      }
+      
+      /* =========================
+   DARK THEME
+   Add "dark" to the body:
+   <body class="dark">
+   ========================= */
+
+
+
+body.dark .ovtext {
+  color: #f8fafc;
+}
+
+body.dark .subovtext {
+  color: #94a3b8;
+}
+
+body.dark .ovtopbox {
+  background-color: #151c24;
+  border-color: #334155;
+  border-bottom-color: #2563eb;
+}
+
+body.dark .ovtopbox:hover {
+  background-color: #243247;
+}
+
+body.dark .firsticonbox p {
+  color: #60a5fa;
+}
+
+body.dark .profileimage {
+  background-color: #2563eb;
+}
+
+body.dark .usernamebox p {
+  color: #f8fafc;
+}
+
+body.dark .totalscorebox p {
+  color: #94a3b8;
+}
+
+body.dark .svgposbox {
+  background-color: #26323F;
+}
+
+/* Rankings card */
+body.dark .globrankdiv {
+  background-color: #151c24;
+  border-color: #334155;
+}
+
+body.dark .globrankdiv h3 {
+  color: #f8fafc;
+}
+
+body.dark .globdetails {
+  color: #94a3b8;
+  border-bottom-color: #334155;
+}
+
+body.dark .globboxes {
+  border-bottom-color: #334155;
+}
+
+body.dark .globrank {
+  color: #94a3b8;
+}
+
+body.dark .globname {
+  color: #f8fafc;
+}
+
+body.dark .globxp {
+  color: #94a3b8;
+}
+
+/* Floating user details */
+body.dark .floatingdetails {
+  background: #151c24;
+  border-color: #475569;
+}
+
+body.dark .floatingusername {
+  color: #f8fafc;
+}
+
+body.dark .floatinguserxp {
+  color: #94a3b8;
+}
+
+/* Subject selector */
+body.dark #subject {
+  background-color: #151c24;
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+body.dark #subject:hover {
+  border-color: #2563eb;
+  background-color: #243247;
+}
+
+body.dark #subject option {
+  background-color: #151c24;
+  color: #f8fafc;
+}
+
+/* Current user */
+body.dark .current-user-podium {
+  border-color: #2563eb;
+}
+
+body.dark .current-user-ranking {
+  background: #151c24;
+  border-left-color: #2563eb;
+}
+
+body.dark .current-user-ranking .globrank,
+body.dark .current-user-ranking .globname {
+  color: #60a5fa;
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="overallcontainer">
+      <h1 class="ovtext">Overall Leaderboard</h1>
+
+      <h3 class="subovtext">Our top performers on Prepwire for the year!</h3>
+
+      <!-- ==========================================
+         TOP 3
+    =========================================== -->
+
+      <div class="ovboxcons">
+        <!-- ================= #2 ================= -->
+
+        <div class="ovtopbox">
+          <div class="firsticonbox">
+            <p>1</p>
+          </div>
+
+          <div class="profileimage">
+            <p>.</p>
+          </div>
+
+          <div class="usernamebox">
+            <p>..</p>
+          </div>
+
+          <div class="totalscorebox">
+            <p>
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+
+          <div class="svgposbox">
+            <svg
+              width="60"
+              height="60"
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="
+              M39 45
+              C31 40 25 31 24 20
+              C16 21 9 26 4 33
+              C12 30 19 32 24 37
+              C16 36 9 40 4 47
+              C13 44 20 46 27 50
+              C21 53 16 58 13 64
+              C23 60 32 55 40 50
+              Z"
+                fill="#2563EB"
+              />
+
+              <path
+                d="M27 36C21 32 16 31 11 32"
+                stroke="#60A5FA"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M29 43C22 40 16 41 10 44"
+                stroke="#60A5FA"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M32 49C26 51 22 55 19 59"
+                stroke="#93C5FD"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="
+              M57 45
+              C65 40 71 31 72 20
+              C80 21 87 26 92 33
+              C84 30 77 32 72 37
+              C80 36 87 40 92 47
+              C83 44 76 46 69 50
+              C75 53 80 58 83 64
+              C73 60 64 55 56 50
+              Z"
+                fill="#2563EB"
+              />
+
+              <path
+                d="M69 36C75 32 80 31 85 32"
+                stroke="#60A5FA"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M67 43C74 40 80 41 86 44"
+                stroke="#60A5FA"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M64 49C70 51 74 55 77 59"
+                stroke="#93C5FD"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <!-- GOLD CROWN -->
+
+              <path
+                d="
+              M31 30
+              L34 14
+              L41 23
+              L48 9
+              L55 23
+              L62 14
+              L65 30
+              Z"
+                fill="#F59E0B"
+              />
+
+              <path
+                d="M35 25L41 27L48 16L55 27L61 25"
+                stroke="#FDE68A"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <circle cx="48" cy="17" r="2.2" fill="#2563EB" />
+              <circle cx="37" cy="24" r="1.8" fill="#2563EB" />
+              <circle cx="59" cy="24" r="1.8" fill="#2563EB" />
+
+              <!-- GOLD BADGE -->
+
+              <circle
+                cx="48"
+                cy="51"
+                r="18"
+                fill="#FBBF24"
+                stroke="#D97706"
+                stroke-width="3"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="13"
+                stroke="#FDE68A"
+                stroke-width="2.5"
+              />
+
+              <text
+                x="48"
+                y="58"
+                text-anchor="middle"
+                font-family="Arial, Helvetica, sans-serif"
+                font-size="22"
+                font-weight="800"
+                fill="#2563EB"
+              >
+                1
+              </text>
+
+              <path
+                d="M39 48C40 44 43 42 47 41"
+                stroke="#FFF7D6"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="
+              M24 67
+              L25.5 70
+              L29 71
+              L25.5 72
+              L24 75
+              L22.5 72
+              L19 71
+              L22.5 70
+              Z"
+                fill="#FBBF24"
+              />
+
+              <path
+                d="
+              M72 67
+              L73.5 70
+              L77 71
+              L73.5 72
+              L72 75
+              L70.5 72
+              L67 71
+              L70.5 70
+              Z"
+                fill="#FBBF24"
+              />
+
+              <path
+                d="M29 80H67"
+                stroke="#2563EB"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- ================= #1 ================= -->
+
+        <div class="ovtopbox">
+          <div class="firsticonbox">
+            <p>2</p>
+          </div>
+
+          <div class="profileimage">
+            <p>.</p>
+          </div>
+
+          <div class="usernamebox">
+            <p>..</p>
+          </div>
+
+          <div class="totalscorebox">
+            <p>
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+
+          <div class="svgposbox">
+            <svg
+              width="50"
+              height="50"
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- LEFT WING -->
+
+              <path
+                d="
+              M39 45
+              C31 40 25 31 24 20
+              C16 21 9 26 4 33
+              C12 30 19 32 24 37
+              C16 36 9 40 4 47
+              C13 44 20 46 27 50
+              C21 53 16 58 13 64
+              C23 60 32 55 40 50
+              Z"
+                fill="#64748B"
+              />
+
+              <path
+                d="M27 36C21 32 16 31 11 32"
+                stroke="#CBD5E1"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M29 43C22 40 16 41 10 44"
+                stroke="#CBD5E1"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M32 49C26 51 22 55 19 59"
+                stroke="#E2E8F0"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <!-- RIGHT WING -->
+
+              <path
+                d="
+              M57 45
+              C65 40 71 31 72 20
+              C80 21 87 26 92 33
+              C84 30 77 32 72 37
+              C80 36 87 40 92 47
+              C83 44 76 46 69 50
+              C75 53 80 58 83 64
+              C73 60 64 55 56 50
+              Z"
+                fill="#64748B"
+              />
+
+              <path
+                d="M69 36C75 32 80 31 85 32"
+                stroke="#CBD5E1"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M67 43C74 40 80 41 86 44"
+                stroke="#CBD5E1"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M64 49C70 51 74 55 77 59"
+                stroke="#E2E8F0"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <!-- CROWN -->
+
+              <path
+                d="
+              M31 30
+              L34 14
+              L41 23
+              L48 9
+              L55 23
+              L62 14
+              L65 30
+              Z"
+                fill="#CBD5E1"
+              />
+
+              <path
+                d="M35 25L41 27L48 16L55 27L61 25"
+                stroke="#F8FAFC"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <circle cx="48" cy="17" r="2.2" fill="#2563EB" />
+              <circle cx="37" cy="24" r="1.8" fill="#2563EB" />
+              <circle cx="59" cy="24" r="1.8" fill="#2563EB" />
+
+              <!-- BADGE -->
+
+              <circle
+                cx="48"
+                cy="51"
+                r="18"
+                fill="#CBD5E1"
+                stroke="#94A3B8"
+                stroke-width="3"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="13"
+                stroke="#F8FAFC"
+                stroke-width="2.5"
+              />
+
+              <text
+                x="48"
+                y="58"
+                text-anchor="middle"
+                font-family="Arial, Helvetica, sans-serif"
+                font-size="22"
+                font-weight="800"
+                fill="#334155"
+              >
+                2
+              </text>
+
+              <path
+                d="M39 48C40 44 43 42 47 41"
+                stroke="#FFFFFF"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="
+              M24 67
+              L25.5 70
+              L29 71
+              L25.5 72
+              L24 75
+              L22.5 72
+              L19 71
+              L22.5 70
+              Z"
+                fill="#CBD5E1"
+              />
+
+              <path
+                d="
+              M72 67
+              L73.5 70
+              L77 71
+              L73.5 72
+              L72 75
+              L70.5 72
+              L67 71
+              L70.5 70
+              Z"
+                fill="#CBD5E1"
+              />
+
+              <path
+                d="M29 80H67"
+                stroke="#2563EB"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- ================= #3 ================= -->
+
+        <div class="ovtopbox">
+          <div class="firsticonbox">
+            <p>3</p>
+          </div>
+
+          <div class="profileimage">
+            <p>.</p>
+          </div>
+
+          <div class="usernamebox">
+            <p>..</p>
+          </div>
+
+          <div class="totalscorebox">
+            <p>
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+
+          <div class="svgposbox">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="
+              M39 45
+              C31 40 25 31 24 20
+              C16 21 9 26 4 33
+              C12 30 19 32 24 37
+              C16 36 9 40 4 47
+              C13 44 20 46 27 50
+              C21 53 16 58 13 64
+              C23 60 32 55 40 50
+              Z"
+                fill="#92400E"
+              />
+
+              <path
+                d="M27 36C21 32 16 31 11 32"
+                stroke="#D97706"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M29 43C22 40 16 41 10 44"
+                stroke="#D97706"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M32 49C26 51 22 55 19 59"
+                stroke="#F59E0B"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="
+              M57 45
+              C65 40 71 31 72 20
+              C80 21 87 26 92 33
+              C84 30 77 32 72 37
+              C80 36 87 40 92 47
+              C83 44 76 46 69 50
+              C75 53 80 58 83 64
+              C73 60 64 55 56 50
+              Z"
+                fill="#92400E"
+              />
+
+              <path
+                d="M69 36C75 32 80 31 85 32"
+                stroke="#D97706"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M67 43C74 40 80 41 86 44"
+                stroke="#D97706"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M64 49C70 51 74 55 77 59"
+                stroke="#F59E0B"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <!-- BRONZE CROWN -->
+
+              <path
+                d="
+              M31 30
+              L34 14
+              L41 23
+              L48 9
+              L55 23
+              L62 14
+              L65 30
+              Z"
+                fill="#B45309"
+              />
+
+              <path
+                d="M35 25L41 27L48 16L55 27L61 25"
+                stroke="#FBBF24"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <circle cx="48" cy="17" r="2.2" fill="#2563EB" />
+              <circle cx="37" cy="24" r="1.8" fill="#2563EB" />
+              <circle cx="59" cy="24" r="1.8" fill="#2563EB" />
+
+              <!-- BRONZE BADGE -->
+
+              <circle
+                cx="48"
+                cy="51"
+                r="18"
+                fill="#CD7F32"
+                stroke="#92400E"
+                stroke-width="3"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="13"
+                stroke="#FDE68A"
+                stroke-width="2.5"
+              />
+
+              <text
+                x="48"
+                y="58"
+                text-anchor="middle"
+                font-family="Arial, Helvetica, sans-serif"
+                font-size="22"
+                font-weight="800"
+                fill="#7C2D12"
+              >
+                3
+              </text>
+
+              <path
+                d="M39 48C40 44 43 42 47 41"
+                stroke="#FED7AA"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="
+              M24 67
+              L25.5 70
+              L29 71
+              L25.5 72
+              L24 75
+              L22.5 72
+              L19 71
+              L22.5 70
+              Z"
+                fill="#CD7F32"
+              />
+
+              <path
+                d="
+              M72 67
+              L73.5 70
+              L77 71
+              L73.5 72
+              L72 75
+              L70.5 72
+              L67 71
+              L70.5 70
+              Z"
+                fill="#CD7F32"
+              />
+
+              <path
+                d="M29 80H67"
+                stroke="#2563EB"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+         GLOBAL RANKINGS
+    =========================================== -->
+
+      <div class="globrankdiv">
+        <h3>Global Rankings</h3>
+
+        <p class="globdetails">Students with the highest overall XP</p>
+
+        <!-- Your overall.js will replace the contents here -->
+
+        <div class="globboxcon">
+          <div class="globboxes">
+            <p class="globrank">4</p>
+
+            <div class="globprofile">
+              <p>.</p>
+            </div>
+
+            <p class="globname">..</p>
+
+            <p class="globxp">
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="floatingdetails">
+        <div class="floatingcover">
+          <h3 class="fposition" id="fPosition">#0</h3>
+          <p class="floatingusername" class="floatingName">..</p>
+          <p class="floatinguserxp" id="floatingXP">0<span>XP</span></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subject Leaderboard</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #f8faff;
+        color: #000;
+      }
+
+      .overallcontainer {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 40px;
+      }
+
+      .ovtext {
+        color: #000000;
+        margin: 30px;
+        margin-bottom: 0;
+        font-size: 25px;
+      }
+
+      .subovtext {
+        color: #6b6b6b;
+        font-size: 13px;
+        margin: 5px 40px;
+        font-weight: normal;
+      }
+
+      .ovboxcons {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 0;
+      }
+
+      .ovtopbox {
+        display: grid;
+        justify-items: center;
+        background-color: white;
+        border-radius: 16px 16px 0 0;
+        padding: 5px 10px;
+        width: 200px;
+        border: 1px solid #e8e8e8;
+        border-bottom: 2px ridge #2563eb;
+        margin: 0 10px;
+        overflow: hidden;
+        transition: 0.25s linear;
+        cursor: pointer;
+      }
+
+      .ovtopbox:hover {
+        background-color: #f8fbff;
+      }
+
+      .ovtopbox:first-child {
+        padding-bottom: 25px;
+        width: 210px;
+        box-shadow: 0 0 20px #2564eb35;
+        order: 2;
+      }
+
+      .ovtopbox:last-child {
+        padding-bottom: 10px;
+        order: 3;
+      }
+
+      .ovtopbox:nth-child(2) {
+        padding-bottom: 20px;
+        order: 1;
+      }
+
+      .firsticonbox {
+        margin-right: auto;
+      }
+
+      .firsticonbox p {
+        font-size: 12px;
+        color: #2563eb;
+        font-weight: 600;
+        margin: 8px 0;
+      }
+
+      .profileimage {
+        border-radius: 50%;
+        background-color: #2563eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        height: 80px;
+        width: 80px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .ovtopbox:first-child .profileimage {
+        height: 100px;
+        width: 100px;
+      }
+
+      .profileimage img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
+      }
+
+      .profileimage p {
+        font-size: 20px;
+        margin: 0;
+      }
+
+      .usernamebox {
+        margin-top: 5px;
+        max-width: 180px;
+        overflow: hidden;
+      }
+
+      .usernamebox p {
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .svgposbox {
+        margin-top: 10px;
+        background-color: #ebebeb68;
+        padding: 5px 7px;
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .totalscorebox {
+        margin-top: 10px;
+      }
+
+      .totalscorebox p {
+        color: #6b6b6b;
+        font-size: 13px;
+        margin: 0;
+      }
+
+      .globrankdiv {
+        background-color: #fff;
+        border: 1px solid #d2d4e4;
+        border-radius: 16px;
+        margin: 20px 30px;
+        margin-top: 30px;
+        padding: 20px 0;
+        padding-bottom: 0;
+        overflow: hidden;
+      }
+
+      .globrankdiv h3 {
+        margin: 10px;
+        margin-bottom: 5px;
+        margin-top: 0;
+        font-size: 18px;
+      }
+
+      .globdetails {
+        border-bottom: 1px solid #d2d4e4;
+        padding: 10px;
+        padding-top: 0;
+        color: #6b6b6b;
+        font-size: 12px;
+        margin: 0;
+      }
+
+      .globboxcon {
+        display: grid;
+      }
+
+      .globboxes {
+        display: flex;
+        border-bottom: 1px solid #d2d4e4;
+        align-items: center;
+        padding: 15px 8px;
+        min-height: 62px;
+      }
+
+      .globboxes:last-child {
+        border-bottom: none;
+      }
+
+      .globrank {
+        font-weight: 500;
+        margin: 0 15px;
+        font-size: 14px;
+        color: #6e6e6e;
+        width: 15px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+
+      .globprofile {
+        border-radius: 50%;
+        background-color: #2563eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        margin-left: 10px;
+        margin-right: 10px;
+        height: 30px;
+        width: 30px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .globprofile img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%;
+      }
+
+      .globprofile p {
+        margin: 0;
+        font-size: 13px;
+      }
+
+      .globname {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
+      .globxp {
+        margin-left: auto;
+        margin-right: 10px;
+        color: #6b6b6b;
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .floatingdetails {
+        position: sticky;
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        bottom: 3%;
+        margin-left: auto;
+        right: 5%;
+        width: max-content;
+      }
+
+      .floatingcover {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+
+      .fposition {
+        margin-right: 10px;
+        color: #2563eb;
+      }
+
+      .floatingusername {
+        margin-right: 10px;
+        font-size: 15px;
+      }
+
+      .floatinguserxp {
+        color: #6b6b6b;
+        font-size: 12px;
+      }
+
+      .floatinguserxp span {
+        font-weight: 600;
+      }
+
+      @media (max-width: 700px) {
+        .overallcontainer{
+          padding-top: 40px;
+        }
+        .ovtext {
+          margin: 25px 20px 0;
+          font-size: 22px;
+        }
+
+        .subovtext {
+          margin: 5px 25px;
+        }
+
+        .ovboxcons {
+          margin-top: 30px;
+          width: 100%;
+          overflow-x: auto;
+          justify-content: center;
+          padding: 0 5px;
+        }
+
+        .ovtopbox {
+          width: 145px;
+          min-width: 145px;
+          margin: 0 4px;
+        }
+
+        .ovtopbox:first-child {
+          width: 155px;
+          min-width: 155px;
+        }
+
+        .profileimage {
+          width: 65px;
+          height: 65px;
+        }
+
+        .ovtopbox:first-child .profileimage {
+          width: 80px;
+          height: 80px;
+        }
+
+        .usernamebox {
+          max-width: 130px;
+        }
+
+        .usernamebox p {
+          font-size: 14px;
+        }
+
+        .globrankdiv {
+          margin: 20px 15px;
+          margin-top: 25px;
+        }
+
+        .globboxes {
+          padding: 14px 5px;
+        }
+
+        .globrank {
+          margin: 0 8px;
+        }
+
+        .globprofile {
+          margin-left: 5px;
+          margin-right: 8px;
+        }
+
+        .globname {
+          font-size: 13px;
+        }
+
+        .globxp {
+          font-size: 12px;
+          margin-right: 8px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .ovboxcons {
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .ovtopbox {
+          width: 135px;
+          min-width: 135px;
+        }
+
+        .ovtopbox:first-child {
+          width: 145px;
+          min-width: 145px;
+        }
+
+        .globrankdiv {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
+
+      .current-user-podium {
+        border: 2px solid #2563eb;
+        position: relative;
+      }
+
+      .current-user-podium::after {
+        content: "YOU";
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #2563eb;
+        color: #fff;
+        font-size: 9px;
+        font-weight: 700;
+        padding: 4px 7px;
+        border-radius: 20px;
+        letter-spacing: 0.5px;
+      }
+
+      .current-user-ranking {
+        background: #eff6ff;
+        border-left: 3px solid #2563eb;
+      }
+
+      .current-user-ranking .globrank {
+        color: #2563eb;
+        font-weight: 700;
+      }
+
+      .current-user-ranking .globname {
+        color: #2563eb;
+        font-weight: 600;
+      }
+
+      #subject {
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin: 10px;
+        background-color: #fff;
+        border-radius: 5px;
+        outline: none;
+        transition: 0.25s ease;
+      }
+
+      #subject:hover {
+        border-color: #2563eb;
+        background: #f9f9ff;
+      }
+
+      .selectsubbox {
+        margin: 30px;
+      }
+      
+      
+      body.dark .ovtext {
+  color: #f8fafc;
+}
+
+body.dark .subovtext {
+  color: #94a3b8;
+}
+
+body.dark .ovtopbox {
+  background-color: #151c24;
+  border-color: #334155;
+  border-bottom-color: #2563eb;
+}
+
+body.dark .ovtopbox:hover {
+  background-color: #243247;
+}
+
+body.dark .firsticonbox p {
+  color: #60a5fa;
+}
+
+body.dark .profileimage {
+  background-color: #2563eb;
+}
+
+body.dark .usernamebox p {
+  color: #f8fafc;
+}
+
+body.dark .totalscorebox p {
+  color: #94a3b8;
+}
+
+body.dark .svgposbox {
+  background-color: #26323F;
+}
+
+/* Rankings card */
+body.dark .globrankdiv {
+  background-color: #151c24;
+  border-color: #334155;
+}
+
+body.dark .globrankdiv h3 {
+  color: #f8fafc;
+}
+
+body.dark .globdetails {
+  color: #94a3b8;
+  border-bottom-color: #334155;
+}
+
+body.dark .globboxes {
+  border-bottom-color: #334155;
+}
+
+body.dark .globrank {
+  color: #94a3b8;
+}
+
+body.dark .globname {
+  color: #f8fafc;
+}
+
+body.dark .globxp {
+  color: #94a3b8;
+}
+
+/* Floating user details */
+body.dark .floatingdetails {
+  background: #151c24;
+  border-color: #475569;
+}
+
+body.dark .floatingusername {
+  color: #f8fafc;
+}
+
+body.dark .floatinguserxp {
+  color: #94a3b8;
+}
+
+/* Subject selector */
+body.dark #subject {
+  background-color: #151c24;
+  color: #f8fafc;
+  border-color: #475569;
+}
+
+body.dark #subject:hover {
+  border-color: #2563eb;
+  background-color: #243247;
+}
+
+body.dark #subject option {
+  background-color: #151c24;
+  color: #f8fafc;
+}
+
+/* Current user */
+body.dark .current-user-podium {
+  border-color: #2563eb;
+}
+
+body.dark .current-user-ranking {
+  background: #151c24;
+  border-left-color: #2563eb;
+}
+
+body.dark .current-user-ranking .globrank,
+body.dark .current-user-ranking .globname {
+  color: #60a5fa;
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="overallcontainer">
+      <h1 class="ovtext">Subject Leaderboards</h1>
+
+      <h3 class="subovtext">Top performers on each subject!</h3>
+
+      <div class="selectsubbox">
+        <h3>Subjects</h3>
+
+        <select name="Subject" id="subject">
+          <option value="english">English Language</option>
+          <option value="mathematics">Mathematics</option>
+          <option value="economics">Economics</option>
+          <option value="biology">Biology</option>
+          <option value="physics">Physics</option>
+          <option value="government">Government</option>
+          <option value="geography">Geography</option>
+          <option value="chemistry">Chemistry</option>
+          <option value="commerce">Commerce</option>
+          <option value="civiledu">Civic Education</option>
+          <option value="accounting">Accounting</option>
+          <option value="crk">Christian Religious Knowledge</option>
+          <option value="englishlit">English Literature</option>
+        </select>
+      </div>
+
+      <div class="ovboxcons">
+        <div class="ovtopbox">
+          <div class="firsticonbox">
+            <p>1</p>
+          </div>
+
+          <div class="profileimage">
+            <p>.</p>
+          </div>
+
+          <div class="usernamebox">
+            <p>..</p>
+          </div>
+
+          <div class="totalscorebox">
+            <p>
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+
+          <div class="svgposbox">
+            <svg
+              width="60"
+              height="60"
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M40 45C35 42 31 37 29 31C24 32 20 35 17 39C22 38 26 40 29 43C25 43 21 45 18 48C23 47 27 48 31 51C28 53 25 56 23 60C29 57 34 53 40 50Z"
+                fill="#2563EB"
+              />
+
+              <path
+                d="M56 45C61 42 65 37 67 31C72 32 76 35 79 39C74 38 70 40 67 43C71 43 75 45 78 48C73 47 69 48 65 51C68 53 71 56 73 60C67 57 62 53 56 50Z"
+                fill="#2563EB"
+              />
+
+              <path
+                d="M31 30L34 14L41 23L48 9L55 23L62 14L65 30Z"
+                fill="#F59E0B"
+              />
+
+              <path
+                d="M35 25L41 27L48 16L55 27L61 25"
+                stroke="#FDE68A"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="18"
+                fill="#FBBF24"
+                stroke="#D97706"
+                stroke-width="3"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="13"
+                stroke="#FDE68A"
+                stroke-width="2.5"
+              />
+
+              <text
+                x="48"
+                y="58"
+                text-anchor="middle"
+                font-family="Arial, Helvetica, sans-serif"
+                font-size="22"
+                font-weight="800"
+                fill="#2563EB"
+              >
+                1
+              </text>
+
+              <path
+                d="M39 48C40 44 43 42 47 41"
+                stroke="#FFF7D6"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M29 80H67"
+                stroke="#2563EB"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="ovtopbox">
+          <div class="firsticonbox">
+            <p>2</p>
+          </div>
+
+          <div class="profileimage">
+            <p>.</p>
+          </div>
+
+          <div class="usernamebox">
+            <p>..</p>
+          </div>
+
+          <div class="totalscorebox">
+            <p>
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+
+          <div class="svgposbox">
+            <svg
+              width="50"
+              height="50"
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M40 45C35 42 31 37 29 31C24 32 20 35 17 39C22 38 26 40 29 43C25 43 21 45 18 48C23 47 27 48 31 51C28 53 25 56 23 60C29 57 34 53 40 50Z"
+                fill="#64748B"
+              />
+
+              <path
+                d="M56 45C61 42 65 37 67 31C72 32 76 35 79 39C74 38 70 40 67 43C71 43 75 45 78 48C73 47 69 48 65 51C68 53 71 56 73 60C67 57 62 53 56 50Z"
+                fill="#64748B"
+              />
+
+              <path
+                d="M31 30L34 14L41 23L48 9L55 23L62 14L65 30Z"
+                fill="#CBD5E1"
+              />
+
+              <path
+                d="M35 25L41 27L48 16L55 27L61 25"
+                stroke="#F8FAFC"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="18"
+                fill="#CBD5E1"
+                stroke="#94A3B8"
+                stroke-width="3"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="13"
+                stroke="#F8FAFC"
+                stroke-width="2.5"
+              />
+
+              <text
+                x="48"
+                y="58"
+                text-anchor="middle"
+                font-family="Arial, Helvetica, sans-serif"
+                font-size="22"
+                font-weight="800"
+                fill="#334155"
+              >
+                2
+              </text>
+
+              <path
+                d="M39 48C40 44 43 42 47 41"
+                stroke="#FFFFFF"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M29 80H67"
+                stroke="#2563EB"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="ovtopbox">
+          <div class="firsticonbox">
+            <p>3</p>
+          </div>
+
+          <div class="profileimage">
+            <p>.</p>
+          </div>
+
+          <div class="usernamebox">
+            <p>..</p>
+          </div>
+
+          <div class="totalscorebox">
+            <p>
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+
+          <div class="svgposbox">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M40 45C35 42 31 37 29 31C24 32 20 35 17 39C22 38 26 40 29 43C25 43 21 45 18 48C23 47 27 48 31 51C28 53 25 56 23 60C29 57 34 53 40 50Z"
+                fill="#92400E"
+              />
+
+              <path
+                d="M56 45C61 42 65 37 67 31C72 32 76 35 79 39C74 38 70 40 67 43C71 43 75 45 78 48C73 47 69 48 65 51C68 53 71 56 73 60C67 57 62 53 56 50Z"
+                fill="#92400E"
+              />
+
+              <path
+                d="M31 30L34 14L41 23L48 9L55 23L62 14L65 30Z"
+                fill="#B45309"
+              />
+
+              <path
+                d="M35 25L41 27L48 16L55 27L61 25"
+                stroke="#FBBF24"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="18"
+                fill="#CD7F32"
+                stroke="#92400E"
+                stroke-width="3"
+              />
+
+              <circle
+                cx="48"
+                cy="51"
+                r="13"
+                stroke="#FDE68A"
+                stroke-width="2.5"
+              />
+
+              <text
+                x="48"
+                y="58"
+                text-anchor="middle"
+                font-family="Arial, Helvetica, sans-serif"
+                font-size="22"
+                font-weight="800"
+                fill="#7C2D12"
+              >
+                3
+              </text>
+
+              <path
+                d="M39 48C40 44 43 42 47 41"
+                stroke="#FED7AA"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+
+              <path
+                d="M29 80H67"
+                stroke="#2563EB"
+                stroke-width="4"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="globrankdiv">
+        <h3>Rankings</h3>
+
+        <p class="globdetails">Students with the highest XP on {blaa}</p>
+
+        <div class="globboxcon">
+          <div class="globboxes">
+            <p class="globrank">4</p>
+
+            <div class="globprofile">
+              <p>.</p>
+            </div>
+
+            <p class="globname">..</p>
+
+            <p class="globxp">
+              0
+              <span style="font-weight: 600">XP</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="floatingdetails">
+        <div class="floatingcover">
+          <h3 class="fposition" id="fPosition">#0</h3>
+
+          <p class="floatingusername">..</p>
+
+          <p class="floatinguserxp" id="floatingXP">
+            0
+            <span>XP</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
