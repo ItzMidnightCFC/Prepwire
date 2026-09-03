@@ -75,7 +75,9 @@ export function init() {
       }
 
       return stats.map((stat) => {
-        const profile = users?.find((user) => user.user_id === stat.user_id);
+        const profile = users?.find(
+          (user) => user.user_id === stat.user_id,
+        );
 
         return {
           id: stat.user_id,
@@ -140,7 +142,6 @@ export function init() {
         <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
         <circle cx="36" cy="45" r="20" fill="#F5B942" stroke="#D89A16" stroke-width="3"/>
         <circle cx="36" cy="45" r="15" fill="#FFD76A"/>
-        <text x="36" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#A66A00">1</text>
       </svg>
     `,
 
@@ -152,7 +153,6 @@ export function init() {
         <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
         <circle cx="36" cy="45" r="20" fill="#BFC3C9" stroke="#969BA3" stroke-width="3"/>
         <circle cx="36" cy="45" r="15" fill="#E1E4E8"/>
-        <text x="36" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#686D75">2</text>
       </svg>
     `,
 
@@ -164,7 +164,6 @@ export function init() {
         <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
         <circle cx="36" cy="45" r="20" fill="#B87333" stroke="#965A25" stroke-width="3"/>
         <circle cx="36" cy="45" r="15" fill="#D89A63"/>
-        <text x="36" y="52" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#744116">3</text>
       </svg>
     `,
   };
@@ -192,21 +191,18 @@ export function init() {
 
     row.className = "weekboxes";
 
-    const isCurrentUser = Boolean(currentUserId && user.id === currentUserId);
+    const isCurrentUser = Boolean(
+      currentUserId && user.id === currentUserId,
+    );
 
     highlightRow(row, isCurrentUser);
-
-    const rankElement = document.createElement("p");
-
-    rankElement.className = "weekrank";
-
-    rankElement.textContent = rank;
 
     const icon = document.createElement("div");
 
     icon.className = "weekicons";
 
-    icon.innerHTML = medalSVGs[rank] || createSimpleRankSVG(rank);
+    icon.innerHTML =
+      medalSVGs[rank] || createSimpleRankSVG(rank);
 
     const profile = document.createElement("div");
 
@@ -228,8 +224,6 @@ export function init() {
       ${formatXP(user.weekly_xp)}
       <span style="font-weight: 600">XP</span>
     `;
-
-    row.appendChild(rankElement);
 
     row.appendChild(icon);
 
@@ -272,7 +266,11 @@ export function init() {
     }
 
     users.forEach((user, index) => {
-      const row = createWeeklyRow(user, index + 1, currentUserId);
+      const row = createWeeklyRow(
+        user,
+        index + 1,
+        currentUserId,
+      );
 
       weeklyBox.appendChild(row);
     });
@@ -301,7 +299,9 @@ export function init() {
       return;
     }
 
-    const currentIndex = users.findIndex((user) => user.id === currentUser.id);
+    const currentIndex = users.findIndex(
+      (user) => user.id === currentUser.id,
+    );
 
     if (currentIndex === -1) {
       positionElement.textContent = "—";
@@ -317,7 +317,8 @@ export function init() {
 
     positionElement.textContent = `#${currentIndex + 1}`;
 
-    nameElement.textContent = currentUserData.full_name || "Unknown User";
+    nameElement.textContent =
+      currentUserData.full_name || "Unknown User";
 
     xpElement.innerHTML = `
       ${formatXP(currentUserData.weekly_xp)}
@@ -361,7 +362,10 @@ export function init() {
 
     const currentUserId = currentUser?.id || null;
 
-    updateWeeklyRankings(leaderboard, currentUserId);
+    updateWeeklyRankings(
+      leaderboard,
+      currentUserId,
+    );
 
     await updateFloatingUser(leaderboard);
   }
@@ -419,4 +423,4 @@ export function init() {
   subscribeToLeaderboard();
 
   return cleanup;
-}
+          }
