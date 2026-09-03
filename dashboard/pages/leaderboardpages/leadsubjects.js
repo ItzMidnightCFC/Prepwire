@@ -131,38 +131,69 @@ async function loadLeaderboard() {
     `;
   }
 
-  const { data, error } = await supabase
+  // Get leaderboard XP only
+  const { data: leaderboardData, error: leaderboardError } = await supabase
     .from("leaderboard_profiles")
-    .select(
-      `
+    .select(`
       user_id,
       subject,
-      xp,
-      full_name,
-      avatar_url
-    `,
-    )
+      xp
+    `)
     .eq("subject", selectedSubject)
     .order("xp", { ascending: false });
 
-  if (error) {
-    console.error("Leaderboard error:", error);
+  if (leaderboardError) {
+    console.error("Leaderboard error:", leaderboardError);
     showError("Unable to load leaderboard.");
     return;
   }
 
-  if (!data || data.length === 0) {
+  if (!leaderboardData || leaderboardData.length === 0) {
     showEmptyState(subjectName);
     return;
   }
 
-  const leaderboard = data.map((student) => ({
-    user_id: student.user_id,
-    subject: student.subject,
-    total_xp: Number(student.xp) || 0,
-    full_name: student.full_name || "Student",
-    avatar_url: student.avatar_url || null,
-  }));
+  // Get the latest profile information from users
+  const userIds = leaderboardData
+    .map((student) => student.user_id)
+    .filter(Boolean);
+
+  let users = [];
+
+  if (userIds.length > 0) {
+    const { data: usersData, error: usersError } = await supabase
+      .from("users")
+      .select(`
+        user_id,
+        full_name,
+        avatar_url
+      `)
+      .in("user_id", userIds);
+
+    if (usersError) {
+      console.error("Users profile error:", usersError);
+    } else {
+      users = usersData || [];
+    }
+  }
+
+  // Combine XP from leaderboard_profiles
+  // with the latest profile from users
+  const leaderboard = leaderboardData.map((student) => {
+    const profile = users.find(
+      (user) => user.user_id === student.user_id,
+    );
+
+    return {
+      user_id: student.user_id,
+      subject: student.subject,
+      total_xp: Number(student.xp) || 0,
+
+      // ALWAYS use the current users table profile
+      full_name: profile?.full_name || "Student",
+      avatar_url: profile?.avatar_url || null,
+    };
+  });
 
   leaderboard.sort((a, b) => {
     return b.total_xp - a.total_xp;
@@ -686,4 +717,4 @@ export async function init() {
   setupSubjectListener();
 
   await initializeLeaderboard();
-}
+    }
