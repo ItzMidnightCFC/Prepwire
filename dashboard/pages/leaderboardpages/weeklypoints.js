@@ -8,7 +8,6 @@ let initialized = false;
 
 export function init() {
   const weeklyBox = document.querySelector(".weeklybox");
-
   if (!weeklyBox) {
     return null;
   }
@@ -134,39 +133,72 @@ export function init() {
   }
 
   const medalSVGs = {
-    1: `
-      <svg width="50px" height="50px" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13 8L24 31L36 17L48 31L59 8" fill="#2563EB"/>
-        <path d="M13 8L24 31L36 17L48 31L59 8" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M25 8L31 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
-        <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="36" cy="45" r="20" fill="#F5B942" stroke="#D89A16" stroke-width="3"/>
-        <circle cx="36" cy="45" r="15" fill="#FFD76A"/>
-      </svg>
-    `,
+  1: `
+    <svg width="50px" height="50px" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13 8L24 31L36 17L48 31L59 8" fill="#2563EB"/>
+      <path d="M13 8L24 31L36 17L48 31L59 8" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25 8L31 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
+      <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
 
-    2: `
-      <svg width="50px" height="50px" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13 8L24 31L36 17L48 31L59 8" fill="#2563EB"/>
-        <path d="M13 8L24 31L36 17L48 31L59 8" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M25 8L31 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
-        <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="36" cy="45" r="20" fill="#BFC3C9" stroke="#969BA3" stroke-width="3"/>
-        <circle cx="36" cy="45" r="15" fill="#E1E4E8"/>
-      </svg>
-    `,
+      <circle cx="36" cy="45" r="20" fill="#F5B942" stroke="#D89A16" stroke-width="3"/>
+      <circle cx="36" cy="45" r="15" fill="#FFD76A"/>
 
-    3: `
-      <svg width="50px" height="50px" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13 8L24 31L36 17L48 31L59 8" fill="#2563EB"/>
-        <path d="M13 8L24 31L36 17L48 31L59 8" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M25 8L31 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
-        <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="36" cy="45" r="20" fill="#B87333" stroke="#965A25" stroke-width="3"/>
-        <circle cx="36" cy="45" r="15" fill="#D89A63"/>
-      </svg>
-    `,
-  };
+      <text
+        x="36"
+        y="51"
+        text-anchor="middle"
+        font-family="Arial, sans-serif"
+        font-size="18"
+        font-weight="700"
+        fill="#8A5A00"
+      >1</text>
+    </svg>
+  `,
+
+  2: `
+    <svg width="50px" height="50px" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13 8L24 31L36 17L48 31L59 8" fill="#2563EB"/>
+      <path d="M13 8L24 31L36 17L48 31L59 8" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25 8L31 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
+      <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
+
+      <circle cx="36" cy="45" r="20" fill="#BFC3C9" stroke="#969BA3" stroke-width="3"/>
+      <circle cx="36" cy="45" r="15" fill="#E1E4E8"/>
+
+      <text
+        x="36"
+        y="51"
+        text-anchor="middle"
+        font-family="Arial, sans-serif"
+        font-size="18"
+        font-weight="700"
+        fill="#686D75"
+      >2</text>
+    </svg>
+  `,
+
+  3: `
+    <svg width="50px" height="50px" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13 8L24 31L36 17L48 31L59 8" fill="#2563EB"/>
+      <path d="M13 8L24 31L36 17L48 31L59 8" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M25 8L31 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
+      <path d="M47 8L41 22" stroke="#60A5FA" stroke-width="2" stroke-linecap="round"/>
+
+      <circle cx="36" cy="45" r="20" fill="#B87333" stroke="#965A25" stroke-width="3"/>
+      <circle cx="36" cy="45" r="15" fill="#D89A63"/>
+
+      <text
+        x="36"
+        y="51"
+        text-anchor="middle"
+        font-family="Arial, sans-serif"
+        font-size="18"
+        font-weight="700"
+        fill="#70401F"
+      >3</text>
+    </svg>
+  `,
+};
 
   function createSimpleRankSVG(rank) {
     return `
