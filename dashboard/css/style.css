@@ -164,7 +164,7 @@ body,
   width: 300px;
   background: #ffffff;
   color: #000000;
-  border-right: 1px solid transparent;
+  border-right: 1px solid #ccc;
   padding-bottom: 0;
   display: grid;
   transition: 0.25s linear;
