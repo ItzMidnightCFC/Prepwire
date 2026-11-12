@@ -164,7 +164,7 @@ body,
   width: 300px;
   background: #ffffff;
   color: #000000;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid transparent;
   padding-bottom: 0;
   display: grid;
   transition: 0.25s linear;
@@ -364,7 +364,7 @@ nav a .svgcolor.active {
 
   .sidebar {
     margin-left: -80%;
-    width: 60%;
+    width: 70%;
     position: fixed;
     height: 100%;
     z-index: 999999;
