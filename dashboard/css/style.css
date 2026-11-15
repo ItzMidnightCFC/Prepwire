@@ -323,7 +323,7 @@ nav a .svgcolor.active {
   display: none;
   height: 50px;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 0px solid #ccc;
 }
 
 #menuBtn {
